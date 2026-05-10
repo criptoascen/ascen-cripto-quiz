@@ -155,8 +155,11 @@ const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScoUaSLxzXWVu2
 const FORM_ENTRIES = {
     nome: "entry.1155362806",
     telefone: "entry.963065932",
-    email: "entry.1448834397"
+    email: "entry.1448834397",
+    score: "entry.1647840452",
+    nivel: "entry.1001813430"
 };
+const NIVEL_LABEL = { easy: "Iniciante", medium: "Intermediário", hard: "Avançado" };
 
 // =====================================================
 // BANCO DE PERGUNTAS — ~280 perguntas balanceadas
@@ -242,7 +245,7 @@ const QUESTION_BANK = [
   {id:71,question:"O que significa a sigla DeFi?",options:["Finanças descentralizadas","Finanças digitais","Finanças distribuídas","Finanças diretas"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
   {id:72,question:"O que é uma DEX em DeFi?",options:["Exchange descentralizada on-chain","Versão digital de corretora tradicional","Aplicativo oficial da Binance","Carteira oficial das exchanges"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
   {id:73,question:"O que são stablecoins em uma frase?",options:["Criptomoedas com paridade a um ativo","Criptomoedas de baixa capitalização","Criptomoedas só usadas em DeFi","Criptomoedas emitidas por bancos"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
-  {id:74,question:"Qual é a stablecoin com maior capitalização?",options:["USDT (Tether)","USDC (Circle)","DAI (MakerDAO)","BUSD (Binance)"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
+  {id:74,question:"Qual é a stablecoin com maior capitalização?",options:["USDT (Tether)","USDC (Circle)","DAI (MakerDAO)","FDUSD (First Digital)"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
   {id:75,question:"O que é yield farming em poucas palavras?",options:["Ganhar rendimento provendo liquidez","Comprar tokens em pré-venda","Fazer airdrops em massa","Operar futuros perpétuos"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
   {id:76,question:"O que é uma pool de liquidez em DEXs?",options:["Reserva usada para cotar trades","Reserva técnica das exchanges","Conta conjunta de mineradores","Caixa coletivo de stablecoins"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
   {id:77,question:"O que significa APY em produtos DeFi?",options:["Rendimento percentual anual","Rendimento percentual mensal","Rendimento total do protocolo","Rendimento bruto antes de taxas"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
@@ -271,7 +274,7 @@ const QUESTION_BANK = [
   {id:100,question:"O que define o conceito de \"real yield\"?",options:["Receita real distribuída do protocolo","Rendimento ajustado pela inflação","Rendimento estimado em backtest","Recompensa em tokens recém emitidos"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
   {id:101,question:"O que é o oráculo de preço de uma DEX usado para?",options:["Calcular preço de execução e liquidação","Atualizar a interface gráfica do app","Listar novos tokens da plataforma","Validar identidade dos usuários"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
   {id:102,question:"O que é \"sandwich attack\" em uma DEX?",options:["Cerca a TX da vítima entre duas próprias","Ataca contratos com chamadas em loop","Trava o RPC do usuário com spam","Falsifica preço com ordem fake"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
-  {id:103,question:"O que define a stablecoin sUSDe (Ethena)?",options:["Lastro sintético via posições delta-neutras","Lastro 100% em dólar custodiado","Lastro algorítmico sem colateral","Lastro em ouro físico tokenizado"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
+  {id:103,question:"O que define a stablecoin USDe (Ethena)?",options:["Lastro sintético via posições delta-neutras","Lastro 100% em dólar custodiado","Lastro algorítmico sem colateral","Lastro em ouro físico tokenizado"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
   {id:104,question:"O que é o conceito de \"isolated lending market\"?",options:["Risco isolado por par de ativos","Empréstimo único por usuário","Mercado restrito a stablecoins","Mercado fora da blockchain"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
   {id:105,question:"O que é \"composability\" em DeFi?",options:["Protocolos se conectando como peças LEGO","Capacidade de criar carteiras múltiplas","Criação de tokens sem auditoria prévia","Composição de portfólio entre exchanges"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
 
@@ -372,7 +375,7 @@ const QUESTION_BANK = [
   {id:193,question:"O que ocorre com a recompensa em cada halving?",options:["É reduzida pela metade","É dobrada pelo protocolo","É distribuída pela pool","É travada por 4 anos"],correctAnswer:0,category:"Mining",difficulty:"medium"},
   {id:194,question:"O que é cloud mining em uma frase?",options:["Alugar capacidade de mineração remota","Minerar usando energia solar local","Minerar dentro de exchange paga","Minerar com hardware compartilhado"],correctAnswer:0,category:"Mining",difficulty:"medium"},
   {id:195,question:"Qual algoritmo de hash o Bitcoin usa?",options:["SHA-256","Scrypt","Ethash","X11"],correctAnswer:0,category:"Mining",difficulty:"hard"},
-  {id:196,question:"Qual algoritmo de hash o Litecoin originalmente usa?",options:["Scrypt","SHA-256","Ethash","Equihash"],correctAnswer:0,category:"Mining",difficulty:"hard"},
+  {id:196,question:"Qual algoritmo de hash o Litecoin utiliza?",options:["Scrypt","SHA-256","Ethash","Equihash"],correctAnswer:0,category:"Mining",difficulty:"hard"},
   {id:197,question:"Quais são as duas fontes de receita do minerador?",options:["Recompensa de bloco mais taxas","Recompensa fixa anual da rede","Apenas as taxas das transações","Apenas a venda do hardware"],correctAnswer:0,category:"Mining",difficulty:"hard"},
 
   // WALLETS (15)
@@ -440,7 +443,7 @@ const QUESTION_BANK = [
   {id:251,question:"O que é AML aplicado a cripto?",options:["Combate à lavagem de dinheiro","Auditoria mensal de mineradores","Aprovação de listagem de tokens","Acordo entre exchanges grandes"],correctAnswer:0,category:"Regulação",difficulty:"easy"},
   {id:252,question:"O que é KYC em uma frase?",options:["Procedimento de identificação do cliente","Procedimento de validação de carteira","Procedimento de aprovação de token","Procedimento de auditoria do código"],correctAnswer:0,category:"Regulação",difficulty:"easy"},
   {id:253,question:"País que adotou Bitcoin como moeda legal em 2021?",options:["El Salvador","República Dominicana","Equador","Costa Rica"],correctAnswer:0,category:"Regulação",difficulty:"easy"},
-  {id:254,question:"No Brasil, criptos precisam ser declaradas no IR?",options:["Sim, dependendo do valor mantido","Não, são totalmente isentas","Sim, apenas se vendidas no ano","Não, basta declarar o saldo final"],correctAnswer:0,category:"Regulação",difficulty:"easy"},
+  {id:254,question:"No Brasil, criptos precisam ser declaradas no IR?",options:["Sim, acima do limite definido pela IN RFB nº 1.888","Não, são totalmente isentas no Brasil","Não, basta declarar o saldo final","Sim, apenas as compradas no Brasil"],correctAnswer:0,category:"Regulação",difficulty:"easy"},
   {id:255,question:"O que é a SEC nos Estados Unidos?",options:["Reguladora dos mercados de capitais americanos","Reguladora apenas das exchanges cripto","Banco central dos Estados Unidos","Departamento de impostos federais"],correctAnswer:0,category:"Regulação",difficulty:"medium"},
   {id:256,question:"No Brasil, qual órgão regula exchanges de cripto?",options:["Banco Central do Brasil","Receita Federal do Brasil","Comissão de Valores Mobiliários","Ministério da Fazenda apenas"],correctAnswer:0,category:"Regulação",difficulty:"medium"},
   {id:257,question:"O que é um security token na visão regulatória?",options:["Token classificado como valor mobiliário","Token mais seguro que outros tokens","Token protegido por contrato auditado","Token apenas para investidores qualificados"],correctAnswer:0,category:"Regulação",difficulty:"medium"},
@@ -658,8 +661,12 @@ function submitLeadForm(){
 
     state.leadData = {nome, telefone, email};
 
+    // Calcula score e nível pra mandar junto pro Google Form
+    const finalScore = calculateScore(state.score, state.questions.length, state.elapsedSeconds);
+    const nivel = NIVEL_LABEL[state.difficulty] || state.difficulty;
+
     // Envia pro Google Form via iframe oculto (não bloqueia o resultado se falhar)
-    sendToGoogleForms(nome, telefone, email);
+    sendToGoogleForms(nome, telefone, email, finalScore, nivel);
 
     // Salva no localStorage pra não pedir de novo
     try {
@@ -674,11 +681,13 @@ function submitLeadForm(){
     render();
 }
 
-function sendToGoogleForms(nome, telefone, email){
+function sendToGoogleForms(nome, telefone, email, score, nivel){
     const params = new URLSearchParams();
     params.append(FORM_ENTRIES.nome, nome);
     params.append(FORM_ENTRIES.telefone, telefone);
     params.append(FORM_ENTRIES.email, email);
+    if(score !== undefined && score !== null) params.append(FORM_ENTRIES.score, score);
+    if(nivel) params.append(FORM_ENTRIES.nivel, nivel);
     const url = GOOGLE_FORM_URL + '?' + params.toString();
 
     const iframe = document.createElement('iframe');
