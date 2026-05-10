@@ -4,27 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ascen Cripto Quiz</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="logo-ascen.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --orange: #ff6600; --orange-light: #ff8533; --petrol: #223947;
-            --petrol-light: #2e5b76; --petrol-deep: #0f1e28; --white: #ffffff;
-            --text-primary: #f1f5f9; --text-secondary: #8fa8bc;
-            --border-subtle: rgba(46,91,118,0.3); --gold: #fbbf24;
+            --orange: #ff6600; --orange-light: #ff8533; --petrol: #2e5b76;
+            --petrol-deep: #0a1a2e; --steel: #3a4a5a; --gold: #c9a96e;
+            --white: #ffffff; --text-primary: #f1f5f9; --text-secondary: #8fa8bc;
+            --border-subtle: rgba(46,91,118,0.3); --green: #22c55e; --red: #ef4444;
         }
         body { font-family: 'Sora', sans-serif; background: var(--petrol-deep); color: var(--text-primary); min-height: 100vh; overflow-x: hidden; }
-        .bg-scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255,102,0,0.06), transparent), radial-gradient(ellipse 60% 50% at 80% 90%, rgba(46,91,118,0.15), transparent); }
+        .bg-scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255,102,0,0.06), transparent), radial-gradient(ellipse 60% 50% at 80% 90%, rgba(46,91,118,0.18), transparent); }
         .bg-scene::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%232e5b76' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); opacity: 0.5; }
         .grid-lines { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(46,91,118,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(46,91,118,0.04) 1px, transparent 1px); background-size: 80px 80px; }
         .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: float 20s ease-in-out infinite; }
         .orb-1 { width: 300px; height: 300px; background: rgba(255,102,0,0.06); top: 10%; left: -5%; }
-        .orb-2 { width: 250px; height: 250px; background: rgba(46,91,118,0.12); bottom: 10%; right: -5%; animation-delay: -7s; }
+        .orb-2 { width: 250px; height: 250px; background: rgba(46,91,118,0.15); bottom: 10%; right: -5%; animation-delay: -7s; }
         @keyframes float { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(30px,-20px) scale(1.05)} 66%{transform:translate(-20px,15px) scale(0.95)} }
         .app-container { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        .card { background: rgba(34,57,71,0.85); backdrop-filter: blur(20px); border: 1px solid var(--border-subtle); border-radius: 24px; padding: 40px; width: 100%; max-width: 680px; box-shadow: 0 0 80px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03); }
+        .card { background: rgba(58,74,90,0.55); backdrop-filter: blur(20px); border: 1px solid var(--border-subtle); border-radius: 24px; padding: 40px; width: 100%; max-width: 680px; box-shadow: 0 0 80px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03); }
         .card.animate-in { animation: cardIn 0.4s ease-out; }
         @keyframes cardIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
         .logo-wrap { text-align: center; margin-bottom: 32px; }
@@ -35,65 +35,107 @@
         .opt-btn { flex: 1; min-width: 80px; padding: 14px 10px; border-radius: 14px; border: 1.5px solid var(--border-subtle); background: rgba(46,91,118,0.08); color: var(--text-secondary); font-family: 'Sora'; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.25s; text-align: center; }
         .opt-btn:hover { border-color: var(--orange); color: var(--text-primary); background: rgba(255,102,0,0.06); }
         .opt-btn.active { border-color: var(--orange); color: var(--white); background: linear-gradient(135deg, rgba(255,102,0,0.2), rgba(255,102,0,0.08)); box-shadow: 0 0 20px rgba(255,102,0,0.15); }
-        .cta-btn { width: 100%; padding: 18px; border: none; border-radius: 16px; background: linear-gradient(135deg, var(--orange), #e05500); color: var(--white); font-family: 'Sora'; font-size: 16px; font-weight: 700; cursor: pointer; position: relative; overflow: hidden; transition: all 0.3s; box-shadow: 0 4px 24px rgba(255,102,0,0.3); }
+        .cta-btn { width: 100%; padding: 18px; border: none; border-radius: 16px; background: linear-gradient(135deg, var(--orange), var(--gold)); color: var(--white); font-family: 'Sora'; font-size: 16px; font-weight: 700; cursor: pointer; position: relative; overflow: hidden; transition: all 0.3s; box-shadow: 0 4px 24px rgba(255,102,0,0.3); }
         .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,102,0,0.45); }
         .cta-btn:active { transform: translateY(0); }
         .cta-btn::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,0.1)); pointer-events:none; }
         .cta-btn.disabled { opacity: 0.4; pointer-events: none; }
         .progress-wrap { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
         .progress-track { flex: 1; height: 6px; background: rgba(46,91,118,0.2); border-radius: 3px; overflow: hidden; }
-        .progress-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--orange), var(--petrol-light)); transition: width 0.5s; }
+        .progress-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--orange), var(--gold)); transition: width 0.5s; }
         .progress-text { font-family: 'Space Mono'; font-size: 13px; color: var(--text-secondary); white-space: nowrap; }
-        .score-badge { font-family: 'Space Mono'; font-size: 13px; color: var(--gold); background: rgba(251,191,36,0.08); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(251,191,36,0.15); }
+        .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 12px; flex-wrap: wrap; }
+        .badge-group { display: flex; gap: 8px; align-items: center; }
+        .score-badge, .timer-badge { font-family: 'Space Mono'; font-size: 13px; padding: 6px 12px; border-radius: 20px; border: 1px solid; white-space: nowrap; }
+        .score-badge { color: var(--gold); background: rgba(201,169,110,0.08); border-color: rgba(201,169,110,0.2); }
+        .timer-badge { color: var(--text-primary); background: rgba(46,91,118,0.15); border-color: var(--border-subtle); }
         .cat-tag { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px; }
-        .cat-tag.Bitcoin{background:rgba(247,147,26,0.12);color:#f7931a;border:1px solid rgba(247,147,26,0.2)} .cat-tag.Ethereum{background:rgba(98,126,234,0.12);color:#627eea;border:1px solid rgba(98,126,234,0.2)} .cat-tag.DeFi{background:rgba(46,91,118,0.2);color:var(--petrol-light);border:1px solid rgba(46,91,118,0.3)} .cat-tag.NFTs{background:rgba(168,85,247,0.12);color:#a855f7;border:1px solid rgba(168,85,247,0.2)} .cat-tag.Blockchain{background:rgba(59,130,246,0.12);color:#3b82f6;border:1px solid rgba(59,130,246,0.2)} .cat-tag.Altcoins{background:rgba(236,72,153,0.12);color:#ec4899;border:1px solid rgba(236,72,153,0.2)} .cat-tag.Mining{background:rgba(251,191,36,0.12);color:var(--gold);border:1px solid rgba(251,191,36,0.2)} .cat-tag.Wallets{background:rgba(34,197,94,0.12);color:#22c55e;border:1px solid rgba(34,197,94,0.2)} .cat-tag.Exchanges{background:rgba(244,63,94,0.12);color:#f43f5e;border:1px solid rgba(244,63,94,0.2)} .cat-tag.Web3{background:rgba(139,92,246,0.12);color:#8b5cf6;border:1px solid rgba(139,92,246,0.2)} .cat-tag.Smart{background:rgba(6,182,212,0.12);color:#06b6d4;border:1px solid rgba(6,182,212,0.2)} .cat-tag.Regulação{background:rgba(100,116,139,0.12);color:#94a3b8;border:1px solid rgba(100,116,139,0.2)}
+        .cat-tag.Bitcoin{background:rgba(247,147,26,0.12);color:#f7931a;border:1px solid rgba(247,147,26,0.2)}
+        .cat-tag.Ethereum{background:rgba(98,126,234,0.12);color:#627eea;border:1px solid rgba(98,126,234,0.2)}
+        .cat-tag.DeFi{background:rgba(46,91,118,0.2);color:var(--petrol);border:1px solid rgba(46,91,118,0.3)}
+        .cat-tag.NFTs{background:rgba(168,85,247,0.12);color:#a855f7;border:1px solid rgba(168,85,247,0.2)}
+        .cat-tag.Blockchain{background:rgba(59,130,246,0.12);color:#3b82f6;border:1px solid rgba(59,130,246,0.2)}
+        .cat-tag.Altcoins{background:rgba(236,72,153,0.12);color:#ec4899;border:1px solid rgba(236,72,153,0.2)}
+        .cat-tag.Mining{background:rgba(251,191,36,0.12);color:#fbbf24;border:1px solid rgba(251,191,36,0.2)}
+        .cat-tag.Wallets{background:rgba(34,197,94,0.12);color:#22c55e;border:1px solid rgba(34,197,94,0.2)}
+        .cat-tag.Exchanges{background:rgba(244,63,94,0.12);color:#f43f5e;border:1px solid rgba(244,63,94,0.2)}
+        .cat-tag.Web3{background:rgba(139,92,246,0.12);color:#8b5cf6;border:1px solid rgba(139,92,246,0.2)}
+        .cat-tag.Smart{background:rgba(6,182,212,0.12);color:#06b6d4;border:1px solid rgba(6,182,212,0.2)}
+        .cat-tag.Regulação{background:rgba(100,116,139,0.12);color:#94a3b8;border:1px solid rgba(100,116,139,0.2)}
+        .cat-tag.Mercado{background:rgba(201,169,110,0.15);color:var(--gold);border:1px solid rgba(201,169,110,0.25)}
         .question-text { font-size: 22px; font-weight: 600; line-height: 1.5; margin-bottom: 28px; }
         .answer-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
         .answer-btn { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-radius: 16px; border: 1.5px solid var(--border-subtle); background: rgba(46,91,118,0.06); color: var(--text-primary); font-family: 'Sora'; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.25s; text-align: left; line-height: 1.4; }
-        .answer-btn:hover:not(.disabled){border-color:var(--orange);background:rgba(255,102,0,0.06)} .answer-btn.selected{border-color:var(--orange);background:rgba(255,102,0,0.1);box-shadow:0 0 24px rgba(255,102,0,0.1)} .answer-btn.correct{border-color:#22c55e!important;background:rgba(34,197,94,0.12)!important;box-shadow:0 0 24px rgba(34,197,94,0.15)} .answer-btn.wrong{border-color:#ef4444!important;background:rgba(239,68,68,0.1)!important} .answer-btn.disabled{cursor:default;opacity:0.5} .answer-btn.correct.disabled,.answer-btn.wrong.disabled{opacity:1}
-        .letter-badge { width: 32px; height: 32px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono'; font-size: 13px; font-weight: 700; background: rgba(46,91,118,0.15); color: var(--petrol-light); transition: all 0.25s; }
-        .answer-btn.selected .letter-badge{background:rgba(255,102,0,0.2);color:var(--orange)} .answer-btn.correct .letter-badge{background:rgba(34,197,94,0.25);color:#22c55e} .answer-btn.wrong .letter-badge{background:rgba(239,68,68,0.2);color:#ef4444}
+        .answer-btn:hover:not(.disabled){border-color:var(--orange);background:rgba(255,102,0,0.06)}
+        .answer-btn.selected{border-color:var(--orange);background:rgba(255,102,0,0.1);box-shadow:0 0 24px rgba(255,102,0,0.1)}
+        .answer-btn.correct{border-color:var(--green)!important;background:rgba(34,197,94,0.12)!important;box-shadow:0 0 24px rgba(34,197,94,0.15)}
+        .answer-btn.wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.1)!important}
+        .answer-btn.disabled{cursor:default;opacity:0.5}
+        .answer-btn.correct.disabled,.answer-btn.wrong.disabled{opacity:1}
+        .letter-badge { width: 32px; height: 32px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono'; font-size: 13px; font-weight: 700; background: rgba(46,91,118,0.15); color: var(--petrol); transition: all 0.25s; }
+        .answer-btn.selected .letter-badge{background:rgba(255,102,0,0.2);color:var(--orange)}
+        .answer-btn.correct .letter-badge{background:rgba(34,197,94,0.25);color:var(--green)}
+        .answer-btn.wrong .letter-badge{background:rgba(239,68,68,0.2);color:var(--red)}
         .answer-icon { margin-left: auto; font-size: 18px; flex-shrink: 0; }
-        .result-score { font-family: 'Space Mono'; font-size: 64px; font-weight: 700; text-align: center; margin: 20px 0; background: linear-gradient(135deg, var(--orange-light), var(--petrol-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .result-pct { text-align: center; font-size: 18px; color: var(--text-secondary); margin-bottom: 8px; }
-        .result-msg { text-align: center; font-size: 20px; font-weight: 600; margin-bottom: 32px; }
+
+        /* RESULTS */
+        .score-circle-wrap { display: flex; justify-content: center; margin: 12px 0 24px; }
+        .score-circle { width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, var(--petrol-deep), var(--petrol)); border: 3px solid var(--gold); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(201,169,110,0.25), inset 0 0 30px rgba(0,0,0,0.3); }
+        .score-emoji { font-size: 36px; margin-bottom: 4px; }
+        .score-number { font-family: 'Space Mono'; font-size: 56px; font-weight: 700; line-height: 1; background: linear-gradient(135deg, var(--orange), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .score-of { font-family: 'Space Mono'; font-size: 13px; color: var(--text-secondary); letter-spacing: 1px; margin-top: 4px; }
+        .result-msg { text-align: center; font-size: 18px; font-weight: 600; margin-bottom: 24px; line-height: 1.4; }
+        .result-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+        .stat-card { padding: 16px; border-radius: 14px; background: rgba(46,91,118,0.15); border: 1px solid var(--border-subtle); text-align: center; }
+        .stat-label { font-family: 'Space Mono'; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; }
+        .stat-value { font-family: 'Space Mono'; font-size: 22px; font-weight: 700; color: var(--orange); }
+        .stat-value.gold { color: var(--gold); }
+        .stat-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
         .result-item { padding: 16px; border-radius: 14px; margin-bottom: 10px; border: 1px solid; }
-        .result-item.ok{border-color:rgba(34,197,94,0.2);background:rgba(34,197,94,0.04)} .result-item.fail{border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.04)}
+        .result-item.ok{border-color:rgba(34,197,94,0.2);background:rgba(34,197,94,0.04)}
+        .result-item.fail{border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.04)}
         .result-item .rq { font-weight: 600; font-size: 14px; margin-bottom: 8px; line-height: 1.4; }
         .result-item .ra { font-size: 13px; line-height: 1.5; }
-        .result-item .ra.green{color:#22c55e} .result-item .ra.red{color:#f87171}
-        .unique-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary); background: rgba(46,91,118,0.15); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border-subtle); margin-bottom: 20px; }
-        .unique-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
+        .result-item .ra.green{color:var(--green)} .result-item .ra.red{color:#f87171}
+
         .spinner { width: 56px; height: 56px; border: 3px solid rgba(46,91,118,0.2); border-top-color: var(--orange); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
         @keyframes spin { to{transform:rotate(360deg)} }
         .loading-wrap { text-align: center; padding: 60px 20px; }
         .loading-wrap h2 { font-size: 20px; font-weight: 600; color: var(--orange); margin-bottom: 8px; }
         .loading-wrap p { color: var(--text-secondary); font-size: 14px; }
-        @media(max-width:600px){.card{padding:24px 18px;border-radius:20px}.logo-img{width:90px}.question-text{font-size:18px}.result-score{font-size:48px}.opt-btn{padding:12px 8px;font-size:13px}}
-        ::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-track{background:transparent} ::-webkit-scrollbar-thumb{background:rgba(46,91,118,0.3);border-radius:3px}
+
+        @media(max-width:600px){
+            .card{padding:24px 18px;border-radius:20px}
+            .logo-img{width:90px}
+            .question-text{font-size:18px}
+            .opt-btn{padding:12px 8px;font-size:13px}
+            .score-circle{width:170px;height:170px}
+            .score-number{font-size:46px}
+        }
+        ::-webkit-scrollbar{width:6px}
+        ::-webkit-scrollbar-track{background:transparent}
+        ::-webkit-scrollbar-thumb{background:rgba(46,91,118,0.3);border-radius:3px}
         .results-list { max-height: 400px; overflow-y: auto; margin-bottom: 24px; padding-right: 4px; }
         .fade-in { animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-        .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 
-        /* ===== LEAD FORM STYLES ===== */
-        .form-group { margin-bottom: 20px; }
+        /* LEAD FORM */
+        .form-group { margin-bottom: 18px; }
         .form-label { display: block; font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px; }
         .form-input { width: 100%; padding: 16px 20px; border-radius: 14px; border: 1.5px solid var(--border-subtle); background: rgba(46,91,118,0.08); color: var(--text-primary); font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 500; transition: all 0.25s; outline: none; }
         .form-input::placeholder { color: rgba(143,168,188,0.5); }
         .form-input:focus { border-color: var(--orange); background: rgba(255,102,0,0.04); box-shadow: 0 0 20px rgba(255,102,0,0.08); }
-        .form-input.error { border-color: #ef4444; background: rgba(239,68,68,0.04); }
+        .form-input.error { border-color: var(--red); background: rgba(239,68,68,0.04); }
         .form-error { font-size: 12px; color: #f87171; margin-top: 6px; display: none; }
         .form-error.visible { display: block; }
-        .form-divider { height: 1px; background: var(--border-subtle); margin: 28px 0; }
-        .lead-intro { text-align: center; margin-bottom: 28px; }
-        .lead-intro h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+        .lead-intro { text-align: center; margin-bottom: 24px; }
+        .lead-intro h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; line-height: 1.4; color: var(--white); }
         .lead-intro p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
-        .lead-features { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; justify-content: center; }
-        .lead-feature { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 20px; background: rgba(46,91,118,0.12); border: 1px solid var(--border-subtle); font-size: 13px; color: var(--text-secondary); }
-        .lead-feature .feat-icon { font-size: 16px; }
-        .form-privacy { text-align: center; margin-top: 16px; font-size: 11px; color: rgba(143,168,188,0.5); }
+        .form-privacy { text-align: center; margin-top: 14px; font-size: 11px; color: rgba(143,168,188,0.6); }
         .form-privacy svg { display: inline-block; vertical-align: middle; margin-right: 4px; }
+
+        /* WELCOME BACK */
+        .welcome-back { text-align: center; margin-bottom: 18px; padding: 12px 18px; background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.2); border-radius: 14px; font-size: 14px; color: var(--gold); }
     </style>
 </head>
 <body>
@@ -102,10 +144,13 @@
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 <div class="app-container"><div id="app"></div></div>
-<script>
-const LOGO_SRC = "logo-ascen.png";
 
-/* ===== GOOGLE FORM CONFIG ===== */
+<script>
+// =====================================================
+// CONFIG
+// =====================================================
+const LOGO_SRC = "logo-ascen.png";
+const STORAGE_KEY = "ascen_quiz_lead_v1";
 const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScoUaSLxzXWVu2-cwZS76xGF4OfqJ4gqdILVTx86FXg7Mzipg/formResponse";
 const FORM_ENTRIES = {
     nome: "entry.1155362806",
@@ -113,127 +158,623 @@ const FORM_ENTRIES = {
     email: "entry.1448834397"
 };
 
-const QUESTION_BANK=[{id:1,question:"Qual é o limite máximo de Bitcoins que podem ser minerados?",options:["21 milhões","100 milhões","50 milhões","Ilimitado"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},{id:2,question:"Quem é o criador pseudônimo do Bitcoin?",options:["Satoshi Nakamoto","Vitalik Buterin","Charlie Lee","Roger Ver"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},{id:3,question:"Em que ano o Bitcoin foi lançado?",options:["2009","2008","2010","2011"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},{id:4,question:"Qual é o símbolo do Bitcoin?",options:["BTC","BCH","BIT","XBT"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},{id:5,question:"Quantos Satoshis existem em 1 Bitcoin?",options:["100 milhões","1 milhão","10 milhões","1 bilhão"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},{id:6,question:"O que é o halving do Bitcoin?",options:["Redução da recompensa de mineração pela metade","Divisão do preço","Fork da blockchain","Atualização do protocolo"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},{id:7,question:"Qual foi o primeiro item físico comprado com Bitcoin?",options:["Pizza","Carro","Casa","Computador"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},{id:8,question:"Quantos Bitcoins foram pagos pelas duas pizzas em 2010?",options:["10.000 BTC","1.000 BTC","100 BTC","50.000 BTC"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},{id:9,question:"Qual é o tempo médio entre blocos do Bitcoin?",options:["10 minutos","5 minutos","15 minutos","1 minuto"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},{id:10,question:"O que é a Lightning Network?",options:["Solução de segunda camada para pagamentos rápidos","Nova criptomoeda","Exchange descentralizada","Protocolo de privacidade"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},{id:11,question:"Qual é o tamanho máximo de um bloco do Bitcoin?",options:["1 MB","2 MB","4 MB","8 MB"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},{id:12,question:"O que é SegWit?",options:["Segregated Witness — atualização de escalabilidade","Nova carteira","Exchange","Altcoin"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},{id:13,question:"Qual algoritmo de consenso o Bitcoin usa?",options:["Proof of Work","Proof of Stake","Delegated PoS","Proof of Authority"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},{id:14,question:"Qual foi o preço do Bitcoin em seu lançamento?",options:["Praticamente zero","$1","$10","$100"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},{id:15,question:"O que significa HODL?",options:["Hold On for Dear Life","Hold Digital","High Order Ledger","Hash Distribution"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},{id:16,question:"Qual é a menor unidade do Bitcoin?",options:["Satoshi","Wei","Gwei","Bit"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},{id:17,question:"Quantos halvings o Bitcoin já teve até 2024?",options:["4","3","5","2"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},{id:18,question:"O que é o Bitcoin whitepaper?",options:["Documento técnico original do Bitcoin","Lista de exchanges","Manual de mineração","Código fonte"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},{id:19,question:"Quando ocorre o próximo halving do Bitcoin?",options:["A cada 210.000 blocos","Anualmente","A cada 6 meses","A cada 100.000 blocos"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},{id:20,question:"Quem é o criador do Ethereum?",options:["Vitalik Buterin","Satoshi Nakamoto","Charles Hoskinson","Gavin Wood"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},{id:21,question:"Qual é o símbolo do Ethereum?",options:["ETH","ETC","ETR","EHT"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},{id:22,question:"Em que ano o Ethereum foi lançado?",options:["2015","2014","2016","2013"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},{id:23,question:"Qual é a menor unidade do Ethereum?",options:["Wei","Satoshi","Gwei","Ether"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},{id:24,question:"O que são smart contracts?",options:["Contratos auto-executáveis na blockchain","Contratos digitais","NFTs","Tokens"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},{id:25,question:"Qual atualização transformou o Ethereum em Proof of Stake?",options:["The Merge","London","Berlin","Istanbul"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},{id:26,question:"O que é EIP-1559?",options:["Proposta de melhoria sobre taxas de gas","Novo token","Smart contract","Exchange"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},{id:27,question:"Qual linguagem é usada para programar smart contracts no Ethereum?",options:["Solidity","Python","JavaScript","C++"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},{id:28,question:"O que é gas no Ethereum?",options:["Taxa para executar transações","Tipo de token","Unidade de tempo","Protocolo"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},{id:29,question:"O que é a EVM?",options:["Ethereum Virtual Machine","Exchange Virtual Market","Ether Value Metric","Electronic Validation Method"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},{id:30,question:"Qual é o padrão de token mais comum no Ethereum?",options:["ERC-20","ERC-721","ERC-1155","BEP-20"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},{id:31,question:"O que são NFTs?",options:["Non-Fungible Tokens","New Finance Tokens","Network File Transfer","Node Function Type"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},{id:32,question:"Quando o Ethereum mudou para Proof of Stake?",options:["2022","2021","2023","2020"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},{id:33,question:"Quantos ETH são necessários para ser um validador solo?",options:["32 ETH","16 ETH","64 ETH","100 ETH"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},{id:34,question:"O que é uma DAO no Ethereum?",options:["Organização Autônoma Descentralizada","Digital Asset Owner","Decentralized Application","Data Access Object"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},{id:35,question:"O que foi o incidente da DAO em 2016?",options:["Hack que resultou em um hard fork","Lançamento do Ethereum","Atualização do protocolo","Nova exchange"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},{id:36,question:"O que significa DeFi?",options:["Decentralized Finance","Digital Finance","Distributed Finance","Direct Finance"],correctAnswer:0,category:"DeFi",difficulty:"easy"},{id:37,question:"O que é um DEX?",options:["Exchange descentralizada","Token DeFi","Protocolo de empréstimo","Carteira"],correctAnswer:0,category:"DeFi",difficulty:"easy"},{id:38,question:"Qual é o maior DEX por volume?",options:["Uniswap","PancakeSwap","SushiSwap","Curve"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:39,question:"O que é yield farming?",options:["Prover liquidez para ganhar recompensas","Minerar criptomoedas","Comprar tokens","Fazer staking"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:40,question:"O que são liquidity pools?",options:["Pools de fundos para trading descentralizado","Grupos de mineração","Carteiras compartilhadas","Exchanges"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:41,question:"O que é impermanent loss?",options:["Perda ao prover liquidez devido à volatilidade","Perda permanente de fundos","Taxa de transação","Erro de contrato"],correctAnswer:0,category:"DeFi",difficulty:"hard"},{id:42,question:"O que é um AMM?",options:["Automated Market Maker","Asset Management Module","Advanced Mining Method","Algorithmic Money Market"],correctAnswer:0,category:"DeFi",difficulty:"hard"},{id:43,question:"O que é TVL em DeFi?",options:["Total Value Locked","Token Value Limit","Trade Volume Level","Total Validation Load"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:44,question:"Qual é a stablecoin do MakerDAO?",options:["DAI","USDT","USDC","BUSD"],correctAnswer:0,category:"DeFi",difficulty:"easy"},{id:45,question:"O que são flash loans?",options:["Empréstimos sem garantia em uma transação","Empréstimos rápidos com juros altos","Staking rápido","Trading automático"],correctAnswer:0,category:"DeFi",difficulty:"hard"},{id:46,question:"O que significa APY em DeFi?",options:["Annual Percentage Yield","Asset Price Yearly","Automated Payment Yield","Annual Profit Year"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:47,question:"O que é over-collateralization?",options:["Garantia maior que o valor emprestado","Empréstimo sem garantia","Taxa extra","Penalidade"],correctAnswer:0,category:"DeFi",difficulty:"hard"},{id:48,question:"O que é liquidação em DeFi?",options:["Venda forçada de colateral","Saque de fundos","Compra automática","Fechamento de conta"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:49,question:"O que significa NFT?",options:["Non-Fungible Token","New Finance Token","Network File Transfer","Next Future Tech"],correctAnswer:0,category:"NFTs",difficulty:"easy"},{id:50,question:"Qual é o maior marketplace de NFTs?",options:["OpenSea","Rarible","Foundation","SuperRare"],correctAnswer:0,category:"NFTs",difficulty:"easy"},{id:51,question:"O que é minting de NFT?",options:["Criar um novo NFT na blockchain","Comprar um NFT","Vender um NFT","Transferir um NFT"],correctAnswer:0,category:"NFTs",difficulty:"medium"},{id:52,question:"Quantos CryptoPunks únicos existem?",options:["10.000","5.000","20.000","100.000"],correctAnswer:0,category:"NFTs",difficulty:"hard"},{id:53,question:"O que é royalty em NFTs?",options:["Porcentagem paga ao criador em vendas secundárias","Taxa da plataforma","Preço inicial","Custo de gas"],correctAnswer:0,category:"NFTs",difficulty:"medium"},{id:54,question:"O que são soulbound tokens?",options:["NFTs não-transferíveis","NFTs raros","NFTs de jogos","NFTs musicais"],correctAnswer:0,category:"NFTs",difficulty:"hard"},{id:55,question:"Qual artista digital vendeu um NFT por $69 milhões?",options:["Beeple","Pak","XCOPY","Fewocious"],correctAnswer:0,category:"NFTs",difficulty:"medium"},{id:56,question:"O que é gas war em lançamentos de NFTs?",options:["Competição por taxas mais altas de gas","Guerra de preços","Conflito de contratos","Erro de rede"],correctAnswer:0,category:"NFTs",difficulty:"hard"},{id:57,question:"O que é blockchain?",options:["Registro distribuído de transações","Tipo de criptomoeda","Software de mineração","Carteira digital"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},{id:58,question:"O que é hash?",options:["Função criptográfica que gera identificador único","Tipo de token","Protocolo de rede","Carteira"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},{id:59,question:"O que é Proof of Work?",options:["Consenso baseado em poder computacional","Prova de identidade","Tipo de carteira","Exchange"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},{id:60,question:"O que é Proof of Stake?",options:["Consenso baseado em quantidade de tokens","Prova de trabalho","Tipo de mineração","Carteira"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},{id:61,question:"Qual é a diferença entre hard fork e soft fork?",options:["Hard fork é incompatível, soft fork é retrocompatível","Hard fork é mais difícil","Não há diferença","Soft fork é temporário"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},{id:62,question:"O que é descentralização?",options:["Não há autoridade central controlando","Múltiplas exchanges","Várias carteiras","Muitos usuários"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},{id:63,question:"O que é um oracle em blockchain?",options:["Fonte de dados externos para smart contracts","Tipo de nó","Carteira especial","Exchange"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},{id:64,question:"O que é sharding?",options:["Divisão da blockchain para escalabilidade","Tipo de ataque","Mineração","Carteira"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},{id:65,question:"O que é layer 2?",options:["Solução de escalabilidade sobre blockchain principal","Segunda blockchain","Backup","Testnet"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},{id:66,question:"O que é double-spending?",options:["Gastar a mesma criptomoeda duas vezes","Pagar duas vezes","Erro de transação","Taxa duplicada"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},{id:67,question:"O que são altcoins?",options:["Todas as criptomoedas exceto Bitcoin","Moedas alternativas físicas","Tokens falsos","Criptomoedas antigas"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},{id:68,question:"Qual foi a primeira altcoin criada?",options:["Namecoin","Litecoin","Ethereum","Ripple"],correctAnswer:0,category:"Altcoins",difficulty:"hard"},{id:69,question:"Qual criptomoeda começou como meme?",options:["Dogecoin","Bitcoin","Ethereum","Litecoin"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},{id:70,question:"Qual blockchain é conhecida por alta velocidade?",options:["Solana","Bitcoin","Ethereum","Litecoin"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},{id:71,question:"Qual criptomoeda foca em privacidade?",options:["Monero","Bitcoin","Ethereum","Litecoin"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},{id:72,question:"O que o Chainlink fornece?",options:["Oracles descentralizados","Exchange","Carteira","Mineração"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},{id:73,question:"Qual blockchain foi criada pela Binance?",options:["Binance Smart Chain","Ethereum","Cardano","Solana"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},{id:74,question:"Qual blockchain usa Proof of History?",options:["Solana","Ethereum","Bitcoin","Cardano"],correctAnswer:0,category:"Altcoins",difficulty:"hard"},{id:75,question:"O que é Cosmos?",options:["Internet de blockchains","Exchange","Carteira","Token"],correctAnswer:0,category:"Altcoins",difficulty:"hard"},{id:76,question:"O que é mineração de criptomoedas?",options:["Processo de validar transações e criar novos blocos","Comprar criptomoedas","Negociar criptomoedas","Armazenar criptomoedas"],correctAnswer:0,category:"Mining",difficulty:"easy"},{id:77,question:"O que é ASIC?",options:["Hardware especializado para mineração","Tipo de carteira","Exchange","Token"],correctAnswer:0,category:"Mining",difficulty:"medium"},{id:78,question:"O que é hashrate?",options:["Poder computacional de mineração","Taxa de transação","Velocidade da rede","Preço da moeda"],correctAnswer:0,category:"Mining",difficulty:"medium"},{id:79,question:"Qual algoritmo o Bitcoin usa para mineração?",options:["SHA-256","Scrypt","Ethash","X11"],correctAnswer:0,category:"Mining",difficulty:"hard"},{id:80,question:"O que é cloud mining?",options:["Mineração remota alugando poder computacional","Mineração local","Staking","Trading"],correctAnswer:0,category:"Mining",difficulty:"medium"},{id:81,question:"O que é uma wallet de criptomoedas?",options:["Software/hardware para armazenar chaves privadas","Conta bancária digital","Exchange","Aplicativo de trading"],correctAnswer:0,category:"Wallets",difficulty:"easy"},{id:82,question:"O que é uma hot wallet?",options:["Carteira conectada à internet","Carteira quente fisicamente","Carteira cara","Carteira rápida"],correctAnswer:0,category:"Wallets",difficulty:"medium"},{id:83,question:"O que é seed phrase?",options:["Sequência de palavras para recuperar carteira","Senha da carteira","Nome de usuário","Código PIN"],correctAnswer:0,category:"Wallets",difficulty:"medium"},{id:84,question:"O que é MetaMask?",options:["Wallet de navegador para Ethereum","Exchange","Blockchain","Token"],correctAnswer:0,category:"Wallets",difficulty:"easy"},{id:85,question:"O que acontece se você perder sua seed phrase?",options:["Perde acesso permanente aos fundos","Pode recuperar com e-mail","Exchange pode ajudar","Blockchain restaura"],correctAnswer:0,category:"Wallets",difficulty:"medium"},{id:86,question:"Qual é a maior exchange do mundo?",options:["Binance","Coinbase","Kraken","Bitfinex"],correctAnswer:0,category:"Exchanges",difficulty:"easy"},{id:87,question:"O que é KYC?",options:["Know Your Customer — verificação de identidade","Tipo de token","Protocolo","Taxa"],correctAnswer:0,category:"Exchanges",difficulty:"medium"},{id:88,question:"O que significa 'Not your keys, not your coins'?",options:["Se não tem as chaves, não possui as moedas","Chaves são caras","Moedas são valiosas","Exchanges são perigosas"],correctAnswer:0,category:"Exchanges",difficulty:"medium"},{id:89,question:"O que é slippage?",options:["Diferença entre preço esperado e executado","Taxa extra","Erro de sistema","Atraso"],correctAnswer:0,category:"Exchanges",difficulty:"hard"},{id:90,question:"O que é Web3?",options:["Internet descentralizada baseada em blockchain","Terceira versão da internet","Rede social","Navegador"],correctAnswer:0,category:"Web3",difficulty:"easy"},{id:91,question:"O que é um dApp?",options:["Aplicativo descentralizado","Aplicativo duplo","Aplicativo digital","Aplicativo de dados"],correctAnswer:0,category:"Web3",difficulty:"medium"},{id:92,question:"O que são tokens de governança?",options:["Tokens que dão direito a voto","Tokens de pagamento","Tokens raros","NFTs"],correctAnswer:0,category:"Web3",difficulty:"medium"},{id:93,question:"O que é token gating?",options:["Acesso exclusivo para holders de tokens","Bloquear tokens","Vender tokens","Minerar tokens"],correctAnswer:0,category:"Web3",difficulty:"hard"},{id:94,question:"O que é interoperabilidade na Web3?",options:["Diferentes blockchains se comunicando","Velocidade alta","Custo baixo","Segurança máxima"],correctAnswer:0,category:"Web3",difficulty:"hard"},{id:95,question:"Smart contracts podem ser modificados após deployment?",options:["Não, são imutáveis","Sim, sempre","Apenas pelo criador","Apenas com aprovação"],correctAnswer:0,category:"Smart Contracts",difficulty:"medium"},{id:96,question:"O que é auditoria de smart contract?",options:["Revisão de segurança do código","Teste de velocidade","Verificação de preço","Aprovação legal"],correctAnswer:0,category:"Smart Contracts",difficulty:"medium"},{id:97,question:"O que é reentrancy attack?",options:["Tipo de ataque a smart contracts","Entrada dupla","Login repetido","Transação múltipla"],correctAnswer:0,category:"Smart Contracts",difficulty:"hard"},{id:98,question:"Qual país foi o primeiro a adotar Bitcoin como moeda legal?",options:["El Salvador","Brasil","EUA","China"],correctAnswer:0,category:"Regulação",difficulty:"medium"},{id:99,question:"Criptomoedas precisam ser declaradas no imposto de renda no Brasil?",options:["Sim","Não","Apenas acima de 1 milhão","Apenas se vendidas"],correctAnswer:0,category:"Regulação",difficulty:"medium"},{id:100,question:"O que é CBDC?",options:["Central Bank Digital Currency","Crypto Blockchain Development","Certified Bitcoin","China Bitcoin"],correctAnswer:0,category:"Regulação",difficulty:"hard"},{id:101,question:"O que é uma stablecoin?",options:["Criptomoeda com valor atrelado a um ativo estável","Moeda muito volátil","Token de governança","Moeda de mineração"],correctAnswer:0,category:"DeFi",difficulty:"easy"},{id:102,question:"Qual é o símbolo do Cardano?",options:["ADA","CAR","CDA","CDN"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},{id:103,question:"O que é um token?",options:["Ativo digital criado em uma blockchain existente","Tipo de carteira","Método de mineração","Protocolo de rede"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},{id:104,question:"O que significa P2P em criptomoedas?",options:["Peer-to-Peer — transação direta entre pessoas","Pay-to-Play","Protocol-to-Protocol","Price-to-Price"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},{id:105,question:"O que é FOMO no mercado cripto?",options:["Fear Of Missing Out — medo de ficar de fora","Tipo de análise técnica","Indicador de preço","Estratégia de trading"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},{id:106,question:"O que é FUD?",options:["Fear, Uncertainty and Doubt — medo, incerteza e dúvida","Tipo de token","Protocolo DeFi","Método de staking"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},{id:107,question:"O que é uma whale no mercado cripto?",options:["Investidor com grande quantidade de criptomoedas","Tipo de golpe","Exchange descentralizada","Protocolo de privacidade"],correctAnswer:0,category:"Exchanges",difficulty:"easy"},{id:108,question:"O que é bear market?",options:["Mercado em tendência de queda","Mercado em alta","Mercado lateral","Mercado fechado"],correctAnswer:0,category:"Exchanges",difficulty:"easy"},{id:109,question:"O que é bull market?",options:["Mercado em tendência de alta","Mercado em queda","Mercado lateral","Mercado fechado"],correctAnswer:0,category:"Exchanges",difficulty:"easy"},{id:110,question:"O que é airdrop em cripto?",options:["Distribuição gratuita de tokens","Queda de preço","Tipo de mineração","Atualização de rede"],correctAnswer:0,category:"Web3",difficulty:"easy"},{id:111,question:"O que é um whitelist em cripto?",options:["Lista de endereços aprovados para participar de um evento","Lista de moedas proibidas","Tipo de carteira","Protocolo de segurança"],correctAnswer:0,category:"NFTs",difficulty:"easy"},{id:112,question:"O que é DCA em investimentos cripto?",options:["Dollar Cost Averaging — investir valores fixos periodicamente","Tipo de análise","Protocolo DeFi","Método de mineração"],correctAnswer:0,category:"Exchanges",difficulty:"easy"},{id:113,question:"Qual é o símbolo do Polkadot?",options:["DOT","POL","PLK","PDT"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},{id:114,question:"O que é um bloco em blockchain?",options:["Conjunto de transações agrupadas","Moeda digital","Tipo de carteira","Software"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},{id:115,question:"O que é chave privada?",options:["Código secreto que dá acesso aos seus fundos","Senha do e-mail","Endereço público da carteira","Código da exchange"],correctAnswer:0,category:"Wallets",difficulty:"easy"},{id:116,question:"O que é um endereço de carteira?",options:["Identificador público para receber criptomoedas","Localização física","Senha da carteira","Chave privada"],correctAnswer:0,category:"Wallets",difficulty:"easy"},{id:117,question:"O que é market cap?",options:["Valor total de mercado de uma criptomoeda","Limite de compra","Taxa máxima","Preço máximo"],correctAnswer:0,category:"Exchanges",difficulty:"easy"},{id:118,question:"Quem fundou o Cardano?",options:["Charles Hoskinson","Vitalik Buterin","Gavin Wood","Charlie Lee"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},{id:119,question:"O que é Ethereum Classic?",options:["Fork original do Ethereum após o hack da DAO","Versão antiga do Ethereum","Testnet do Ethereum","Token ERC-20"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},{id:120,question:"O que é Bored Ape Yacht Club?",options:["Coleção de NFTs de macacos","Jogo blockchain","Metaverso","Exchange"],correctAnswer:0,category:"NFTs",difficulty:"easy"},{id:121,question:"O que é wrapped Bitcoin (wBTC)?",options:["Versão tokenizada do Bitcoin na rede Ethereum","Bitcoin em carteira fria","Bitcoin minerado recentemente","Bitcoin em exchange"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:122,question:"O que é slashing no Proof of Stake?",options:["Penalidade para validadores que agem de má-fé","Recompensa extra","Tipo de ataque","Método de staking"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},{id:123,question:"O que é um mempool?",options:["Fila de transações aguardando confirmação","Tipo de pool de liquidez","Carteira de memória","Protocolo de rede"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},{id:124,question:"O que é um nó (node) na blockchain?",options:["Computador que mantém cópia da blockchain","Minerador","Carteira","Exchange"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},{id:125,question:"O que é Polygon (MATIC)?",options:["Solução de escalabilidade para Ethereum","Fork do Bitcoin","Exchange descentralizada","Stablecoin"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},{id:126,question:"O que é um rug pull?",options:["Golpe onde desenvolvedores abandonam o projeto com os fundos","Queda natural de preço","Tipo de fork","Atualização de rede"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:127,question:"O que é staking?",options:["Bloquear criptomoedas para ganhar recompensas","Minerar criptomoedas","Vender tokens","Comprar NFTs"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:128,question:"O que é um block explorer?",options:["Ferramenta para visualizar transações na blockchain","Tipo de minerador","Carteira online","Exchange"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},{id:129,question:"O que é Uniswap?",options:["DEX baseada em AMM no Ethereum","Carteira de criptomoedas","Blockchain","Stablecoin"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:130,question:"O que é Litecoin?",options:["Fork do Bitcoin com blocos mais rápidos","Token ERC-20","Stablecoin","Protocolo DeFi"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},{id:131,question:"O que é um ICO?",options:["Initial Coin Offering — venda inicial de tokens","Tipo de exchange","Protocolo de consenso","Método de mineração"],correctAnswer:0,category:"Regulação",difficulty:"medium"},{id:132,question:"O que é tokenomics?",options:["Economia e distribuição de um token","Tipo de análise técnica","Protocolo de rede","Método de staking"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:133,question:"O que é um fork do Bitcoin?",options:["Divisão da blockchain criando uma nova versão","Novo tipo de carteira","Método de mineração","Exchange"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},{id:134,question:"O que é Aave?",options:["Protocolo de empréstimo descentralizado","Exchange","Stablecoin","Blockchain"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:135,question:"O que é cold storage?",options:["Armazenamento offline de criptomoedas","Mineração em clima frio","Tipo de token","Protocolo de rede"],correctAnswer:0,category:"Wallets",difficulty:"medium"},{id:136,question:"O que é Decentraland?",options:["Metaverso descentralizado baseado em Ethereum","Exchange","Carteira","Stablecoin"],correctAnswer:0,category:"Web3",difficulty:"medium"},{id:137,question:"O que é um smart contract audit?",options:["Revisão de segurança do código do contrato","Atualização de contrato","Criação de contrato","Exclusão de contrato"],correctAnswer:0,category:"Smart Contracts",difficulty:"medium"},{id:138,question:"O que é gas limit no Ethereum?",options:["Quantidade máxima de gas que uma transação pode consumir","Preço mínimo do gas","Limite de transações por bloco","Limite de ETH por carteira"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},{id:139,question:"O que é um order book?",options:["Livro de ordens de compra e venda em uma exchange","Manual da exchange","Histórico de preços","Lista de moedas"],correctAnswer:0,category:"Exchanges",difficulty:"medium"},{id:140,question:"O que é Tether (USDT)?",options:["Stablecoin atrelada ao dólar americano","Criptomoeda volátil","Token de governança","NFT"],correctAnswer:0,category:"DeFi",difficulty:"medium"},{id:141,question:"O que é Taproot no Bitcoin?",options:["Atualização que melhora privacidade e eficiência","Tipo de mineração","Nova criptomoeda","Exchange"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},{id:142,question:"O que é MEV (Maximal Extractable Value)?",options:["Lucro que mineradores/validadores extraem reordenando transações","Valor máximo de um token","Tipo de taxa","Protocolo de consenso"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},{id:143,question:"O que é um rollup em blockchain?",options:["Solução L2 que agrupa transações fora da cadeia principal","Tipo de fork","Método de mineração","Carteira"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},{id:144,question:"Qual a diferença entre optimistic rollup e zk-rollup?",options:["Optimistic assume validade; zk usa provas criptográficas","Não há diferença","Optimistic é mais lento","zk é menos seguro"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},{id:145,question:"O que é um ataque de 51%?",options:["Quando um grupo controla mais da metade do hashrate","Ataque a carteiras","Tipo de phishing","Vírus de mineração"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},{id:146,question:"O que é Chainlink VRF?",options:["Gerador de números aleatórios verificáveis on-chain","Tipo de token","Exchange","Carteira"],correctAnswer:0,category:"Altcoins",difficulty:"hard"},{id:147,question:"O que é um sandwich attack em DeFi?",options:["Manipulação colocando transações antes e depois da vítima","Tipo de empréstimo","Método de staking","Protocolo de consenso"],correctAnswer:0,category:"DeFi",difficulty:"hard"},{id:148,question:"O que é ERC-1155?",options:["Padrão multi-token que suporta fungíveis e não-fungíveis","Versão do Ethereum","Tipo de exchange","Protocolo de staking"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},{id:149,question:"O que é um merkle tree?",options:["Estrutura de dados para verificar integridade de transações","Tipo de token","Algoritmo de mineração","Protocolo de rede"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},{id:150,question:"O que é Nonce na mineração?",options:["Número usado uma vez para encontrar hash válido","Tipo de carteira","Taxa de transação","Protocolo"],correctAnswer:0,category:"Mining",difficulty:"hard"},{id:151,question:"O que é front-running em cripto?",options:["Executar transação antes de outra ao ver uma pendente","Tipo de análise","Método de staking","Protocolo de consenso"],correctAnswer:0,category:"DeFi",difficulty:"hard"},{id:152,question:"O que é uma ponte (bridge) cross-chain?",options:["Protocolo que permite transferir ativos entre blockchains","Tipo de carteira","Método de mineração","Exchange centralizada"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},{id:153,question:"O que é difficulty adjustment no Bitcoin?",options:["Ajuste automático da dificuldade de mineração a cada 2016 blocos","Mudança de preço","Atualização de software","Fork da rede"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},{id:154,question:"O que é um time-lock em smart contracts?",options:["Mecanismo que bloqueia fundos até uma data específica","Tipo de token","Método de consenso","Protocolo de rede"],correctAnswer:0,category:"Smart Contracts",difficulty:"hard"},{id:155,question:"O que é Proof of Reserves?",options:["Prova de que uma exchange possui os fundos dos clientes","Tipo de consenso","Método de mineração","Protocolo DeFi"],correctAnswer:0,category:"Exchanges",difficulty:"hard"},{id:156,question:"O que são zero-knowledge proofs?",options:["Provas criptográficas que verificam sem revelar dados","Provas sem valor","Testes de segurança","Auditorias públicas"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},{id:157,question:"O que é um multisig wallet?",options:["Carteira que requer múltiplas assinaturas para transações","Carteira com múltiplas moedas","Carteira compartilhada","Carteira de exchange"],correctAnswer:0,category:"Wallets",difficulty:"hard"},{id:158,question:"O que é impermanent loss em AMMs?",options:["Perda temporária por divergência de preço dos ativos depositados","Perda permanente","Taxa de protocolo","Bug no contrato"],correctAnswer:0,category:"DeFi",difficulty:"hard"},{id:159,question:"O que é EIP-4844 (Proto-Danksharding)?",options:["Proposta para reduzir custos de rollups no Ethereum","Nova criptomoeda","Tipo de NFT","Protocolo de staking"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},{id:160,question:"O que é um atomic swap?",options:["Troca direta de criptomoedas entre blockchains sem intermediário","Tipo de fork","Método de mineração","Protocolo DeFi"],correctAnswer:0,category:"Blockchain",difficulty:"hard"}];
+// =====================================================
+// BANCO DE PERGUNTAS — ~280 perguntas balanceadas
+// Distratores plausíveis e do mesmo tamanho da resposta correta
+// correctAnswer = 0 (embaralhado em runtime)
+// =====================================================
+const QUESTION_BANK = [
+  // BITCOIN (35)
+  {id:1,question:"Qual é o suprimento máximo de Bitcoin?",options:["21 milhões de unidades","100 milhões de unidades","50 milhões de unidades","84 milhões de unidades"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:2,question:"Quem publicou o whitepaper original do Bitcoin?",options:["Satoshi Nakamoto","Hal Finney","Nick Szabo","Adam Back"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:3,question:"Em que ano a rede Bitcoin foi lançada?",options:["2009","2008","2010","2011"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:4,question:"Qual é o ticker mais usado para Bitcoin?",options:["BTC","BCH","XBT","BTN"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:5,question:"Como se chama a menor unidade do Bitcoin?",options:["Satoshi","Finney","Nakamoto","Bitcent"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:6,question:"O que significa o termo HODL no jargão cripto?",options:["Estratégia de manter no longo prazo","Vender no topo de mercado","Operar com alavancagem alta","Diversificar entre exchanges"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:7,question:"Bitcoin é controlado por qual entidade central?",options:["Nenhuma — é descentralizado","Fundação Bitcoin Core","Conselho de mineradores","Tesouro dos Estados Unidos"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:8,question:"O que faz uma carteira Bitcoin?",options:["Armazena chaves criptográficas","Guarda os bitcoins fisicamente","Aprova transações na rede","Conecta o usuário ao banco"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:9,question:"Onde fica o histórico de transações do Bitcoin?",options:["Distribuído em milhares de nós","Em servidores da Fundação Bitcoin","Em uma planilha global compartilhada","No banco de dados das exchanges"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:10,question:"O que é mineração de Bitcoin em uma frase?",options:["Validação de blocos por trabalho computacional","Compra automática de Bitcoin pela rede","Criação de carteiras vinculadas à rede","Distribuição mensal pela Fundação Bitcoin"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:11,question:"Qual era o preço aproximado de 1 BTC em 2009?",options:["Praticamente zero","Cerca de 1 dólar","Cerca de 100 dólares","Cerca de 10 mil dólares"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:12,question:"Quantas casas decimais 1 Bitcoin pode ter?",options:["8 casas decimais","2 casas decimais","12 casas decimais","18 casas decimais"],correctAnswer:0,category:"Bitcoin",difficulty:"easy"},
+  {id:13,question:"Quantos satoshis equivalem a 1 Bitcoin inteiro?",options:["100 milhões de satoshis","1 milhão de satoshis","10 milhões de satoshis","1 bilhão de satoshis"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:14,question:"O que acontece com a recompensa no halving do Bitcoin?",options:["É dividida pela metade","É dobrada pelo protocolo","É ajustada pela hashrate","É distribuída entre os nós"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:15,question:"Qual é o tempo médio entre blocos do Bitcoin?",options:["Cerca de 10 minutos","Cerca de 1 minuto","Cerca de 30 minutos","Cerca de 1 hora"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:16,question:"Bitcoin é considerado anônimo ou pseudônimo?",options:["Pseudônimo — endereços são públicos","Anônimo — não é rastreável","Anônimo apenas via Lightning","Identificado por padrão na rede"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:17,question:"Qual algoritmo de consenso o Bitcoin utiliza?",options:["Proof of Work","Proof of Stake","Delegated Proof of Stake","Proof of Authority"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:18,question:"O que é o whitepaper original do Bitcoin?",options:["Documento técnico que descreve o protocolo","Manifesto político da comunidade Bitcoin","Manual de instalação de carteiras","Histórico de preço dos primeiros anos"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:19,question:"O que caracteriza um fork da blockchain Bitcoin?",options:["Divisão das regras de consenso","Bloqueio temporário de transações","Migração para outra blockchain","Atualização forçada de carteiras"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:20,question:"O que foi a famosa compra das pizzas em 2010?",options:["Primeira compra real registrada com BTC","Primeira venda de minerador físico","Primeiro contrato escrito em Bitcoin","Primeira transferência entre exchanges"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:21,question:"O que é um endereço Bitcoin?",options:["Identificador derivado de uma chave pública","Login criado em uma exchange","Número fornecido pelo banco central","Token usado para receber pagamentos"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:22,question:"O que define a propriedade de um bitcoin?",options:["Posse da chave privada correspondente","Cadastro em alguma exchange grande","Registro no nome em algum cartório","Comprovante emitido pela rede"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:23,question:"O que o Bitcoin tenta resolver com seu modelo monetário?",options:["Escassez digital sem intermediários","Volatilidade de moedas fiduciárias","Velocidade de pagamentos bancários","Baixa adoção de moedas estatais"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:24,question:"Qual a diferença entre BTC e BCH?",options:["São redes distintas após hard fork","BCH é uma versão de teste do BTC","BCH é uma camada 2 do Bitcoin","BCH é o nome interno do BTC"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:25,question:"O que define um nó (node) da rede Bitcoin?",options:["Software que valida regras do protocolo","Equipamento dedicado a minerar blocos","Servidor oficial das exchanges","Interface gráfica para envio de BTC"],correctAnswer:0,category:"Bitcoin",difficulty:"medium"},
+  {id:26,question:"Qual é o tamanho base de bloco do Bitcoin atualmente?",options:["1 MB com peso até 4 MB via SegWit","8 MB com SegWit ativado por padrão","2 MB fixos desde o whitepaper","32 MB com a atualização Taproot"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},
+  {id:27,question:"O que é a Lightning Network do Bitcoin?",options:["Camada 2 para pagamentos rápidos","Sidechain de smart contracts","Rede paralela com tokens próprios","Protocolo de troca entre exchanges"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},
+  {id:28,question:"O que a atualização SegWit introduziu na rede?",options:["Separação da assinatura do corpo da TX","Aumento do limite máximo de moedas","Novo algoritmo de consenso PoS","Sistema de contratos inteligentes"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},
+  {id:29,question:"A cada quantos blocos ocorre o halving?",options:["A cada 210.000 blocos minerados","A cada 100.000 blocos minerados","A cada 50.000 blocos minerados","A cada 500.000 blocos minerados"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},
+  {id:30,question:"O que a atualização Taproot trouxe ao Bitcoin?",options:["Schnorr signatures e maior privacidade","Aumento da capacidade para 100 TPS","Sistema de delegação de mineração","Ponte oficial com Ethereum"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},
+  {id:31,question:"Quantas confirmações são consideradas seguras para BTC?",options:["6 confirmações é o padrão clássico","1 confirmação já é considerada final","20 confirmações é o mínimo de regra","100 confirmações para qualquer valor"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},
+  {id:32,question:"O que é um ataque de 51% no Bitcoin?",options:["Controle majoritário do hashrate da rede","Ataque coordenado a uma única exchange","Manipulação de preço por baleias","Falha em mais da metade dos nós"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},
+  {id:33,question:"O que ocorrerá quando todos os BTC forem minerados?",options:["Mineradores viverão apenas das taxas","O protocolo emitirá moedas extras","A rede deixará de produzir blocos","O preço será fixado pelo protocolo"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},
+  {id:34,question:"Como o ajuste de dificuldade do Bitcoin funciona?",options:["Recalibra a cada 2.016 blocos","Recalibra diariamente pela rede","Recalibra a cada bloco minerado","Recalibra mensalmente via voto"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},
+  {id:35,question:"O que é o problema do gasto duplo (double-spend)?",options:["Tentar usar a mesma moeda em duas TXs","Pagar o dobro por uma transação","Cobrar duas taxas pela mesma TX","Receber pagamento em duas redes"],correctAnswer:0,category:"Bitcoin",difficulty:"hard"},
 
+  // ETHEREUM (35)
+  {id:36,question:"Quem é o cofundador mais conhecido do Ethereum?",options:["Vitalik Buterin","Charles Hoskinson","Gavin Wood","Joseph Lubin"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},
+  {id:37,question:"Qual é o ticker oficial da moeda do Ethereum?",options:["ETH","ETC","ETR","EHR"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},
+  {id:38,question:"Em que ano a mainnet do Ethereum entrou no ar?",options:["2015","2013","2014","2016"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},
+  {id:39,question:"O que são smart contracts em uma frase?",options:["Programas que rodam em uma blockchain","Contratos jurídicos digitalizados","Acordos assinados por exchanges","Documentos PDF certificados"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},
+  {id:40,question:"O que são NFTs no contexto Ethereum?",options:["Tokens únicos não fungíveis","Tokens utilizados em pagamentos","Tokens emitidos pelos validadores","Tokens vinculados ao dólar"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},
+  {id:41,question:"Quem paga a taxa de gas em uma transação Ethereum?",options:["O remetente da transação","O destinatário do valor","O validador do bloco","A própria rede automaticamente"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},
+  {id:42,question:"O que é uma dApp?",options:["Aplicativo descentralizado em blockchain","App de banco digital com cripto","App vinculado a uma exchange","App nativo das carteiras frias"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},
+  {id:43,question:"O que é o Ethereum em uma frase?",options:["Plataforma para contratos programáveis","Versão mais rápida do Bitcoin","Carteira digital institucional","Sistema bancário descentralizado"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},
+  {id:44,question:"Carteira de navegador mais conhecida pra Ethereum?",options:["MetaMask","Binance Web","Coinbase Wallet Lite","Trust Wallet Browser"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},
+  {id:45,question:"Qual é a menor unidade do Ether?",options:["Wei","Gwei","Finney","Szabo"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},
+  {id:46,question:"O Ether tem suprimento máximo fixo?",options:["Não há limite rígido definido","Sim — é fixo em 21 milhões","Sim — é fixo em 100 milhões","Sim — limite varia anualmente"],correctAnswer:0,category:"Ethereum",difficulty:"easy"},
+  {id:47,question:"Qual linguagem é mais usada para smart contracts em ETH?",options:["Solidity","Vyper","JavaScript","Rust"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:48,question:"Que padrão define tokens fungíveis no Ethereum?",options:["ERC-20","ERC-721","ERC-1155","ERC-4626"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:49,question:"Que padrão é mais usado para NFTs simples?",options:["ERC-721","ERC-20","ERC-1400","ERC-777"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:50,question:"O que é gas em uma transação Ethereum?",options:["Unidade de custo computacional","Taxa fixa por transação","Tempo de espera por bloco","Comissão paga à exchange"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:51,question:"Em qual unidade o gas price costuma ser medido?",options:["Gwei","Wei","Ether","Satoshi"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:52,question:"O que é staking no Ethereum atual (PoS)?",options:["Travar ETH para validar blocos","Comprar ETH em parcelas mensais","Comprar fração de mineração","Apostar ETH no preço futuro"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:53,question:"O que aconteceu no evento chamado The Merge?",options:["Migração de PoW para Proof of Stake","Junção do ETH com o Bitcoin Cash","União das L2s em uma só rede","Fork que eliminou o Ethereum Classic"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:54,question:"O que é uma DAO no contexto Ethereum?",options:["Organização governada por contratos","Carteira coletiva entre amigos","Conta multiusuário em exchange","Departamento jurídico cripto"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:55,question:"O que define o Ethereum Classic (ETC)?",options:["Cadeia original mantida após o fork da DAO","Versão de testes do Ethereum atual","Sidechain oficial mantida pelo time","Layer 2 acoplada à mainnet"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:56,question:"O que é considerado uma layer 2 do Ethereum?",options:["Rede que herda segurança da mainnet","Cópia exata da blockchain principal","Alternativa centralizada à mainnet","Substituto definitivo do Ethereum"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:57,question:"O que é um oracle como Chainlink fornece?",options:["Dados externos para smart contracts","Liquidez para protocolos DeFi","Auditoria de contratos publicados","Carteira de custódia institucional"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:58,question:"Quanto ETH é necessário para um validador solo?",options:["32 ETH","16 ETH","64 ETH","128 ETH"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:59,question:"O que são tokens \"wrapped\" como WETH?",options:["Versão tokenizada de outro ativo","Tokens com supply alterado","Tokens emitidos por exchanges","Tokens só utilizáveis em CEXs"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:60,question:"O que define um rollup no Ethereum?",options:["Agrupa transações fora da L1","Substitui completamente a L1","É um app de governança da rede","É uma carteira institucional"],correctAnswer:0,category:"Ethereum",difficulty:"medium"},
+  {id:61,question:"O que é a EVM em uma frase?",options:["Máquina virtual que executa contratos","Aplicativo oficial da Fundação ETH","Editor visual de smart contracts","Hardware exclusivo para validadores"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},
+  {id:62,question:"O que a EIP-1559 mudou na rede Ethereum?",options:["Introduziu base fee queimada por bloco","Reduziu o tempo do bloco para 6s","Eliminou taxas de gas em swaps","Implementou Proof of Stake na L1"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},
+  {id:63,question:"O que é \"reentrancy\" em smart contracts?",options:["Reentrada maliciosa em uma função","Reexecução de tarefa em segundo plano","Reentrada de validador no consenso","Reabertura de proposta em uma DAO"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},
+  {id:64,question:"Quanto vale 1 Gwei em Ether?",options:["1 bilionésimo de ether (10⁻⁹)","1 milionésimo de ether (10⁻⁶)","1 milésimo de ether (10⁻³)","1 trilionésimo de ether (10⁻¹²)"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},
+  {id:65,question:"O que é um optimistic rollup em uma frase?",options:["Assume validade e aceita disputa","Verifica cada TX com prova ZK","Centraliza execução em um nó","Faz consenso por delegação"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},
+  {id:66,question:"O que é um zk-rollup em uma frase?",options:["Usa provas criptográficas de validade","Confia em sequenciador centralizado","Replica integralmente a mainnet","Roda apenas testes em paralelo"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},
+  {id:67,question:"O que é o evento chamado \"Shanghai\" no Ethereum?",options:["Atualização que liberou saques de stake","Hard fork que aumentou o bloco","Lançamento de uma nova L2 oficial","Migração do EVM para nova versão"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},
+  {id:68,question:"O que é \"slashing\" para validadores Ethereum?",options:["Penalidade por má conduta na rede","Bônus extra por uptime alto","Imposto pago pela Fundação Ethereum","Repasse trimestral aos staking pools"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},
+  {id:69,question:"O que define um \"account abstraction\" (ERC-4337)?",options:["Carteiras como contratos programáveis","Migração para identidade biométrica","Eliminação total das chaves privadas","Centralização em uma carteira única"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},
+  {id:70,question:"O que é MEV no contexto Ethereum?",options:["Valor extraível por reordenar TXs","Métrica de eficiência energética","Modelo econômico das fundações","Mercado externo de validadores"],correctAnswer:0,category:"Ethereum",difficulty:"hard"},
+
+  // DEFI (35)
+  {id:71,question:"O que significa a sigla DeFi?",options:["Finanças descentralizadas","Finanças digitais","Finanças distribuídas","Finanças diretas"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
+  {id:72,question:"O que é uma DEX em DeFi?",options:["Exchange descentralizada on-chain","Versão digital de corretora tradicional","Aplicativo oficial da Binance","Carteira oficial das exchanges"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
+  {id:73,question:"O que são stablecoins em uma frase?",options:["Criptomoedas com paridade a um ativo","Criptomoedas de baixa capitalização","Criptomoedas só usadas em DeFi","Criptomoedas emitidas por bancos"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
+  {id:74,question:"Qual é a stablecoin com maior capitalização?",options:["USDT (Tether)","USDC (Circle)","DAI (MakerDAO)","BUSD (Binance)"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
+  {id:75,question:"O que é yield farming em poucas palavras?",options:["Ganhar rendimento provendo liquidez","Comprar tokens em pré-venda","Fazer airdrops em massa","Operar futuros perpétuos"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
+  {id:76,question:"O que é uma pool de liquidez em DEXs?",options:["Reserva usada para cotar trades","Reserva técnica das exchanges","Conta conjunta de mineradores","Caixa coletivo de stablecoins"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
+  {id:77,question:"O que significa APY em produtos DeFi?",options:["Rendimento percentual anual","Rendimento percentual mensal","Rendimento total do protocolo","Rendimento bruto antes de taxas"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
+  {id:78,question:"O que é colateral em um protocolo de empréstimo?",options:["Garantia bloqueada para o empréstimo","Saldo extra mantido em reserva","Crédito pré-aprovado pelo protocolo","Cobertura paga pela contraparte"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
+  {id:79,question:"Maior DEX por volume historicamente?",options:["Uniswap","SushiSwap","PancakeSwap","Curve Finance"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
+  {id:80,question:"O que é um governance token de protocolo?",options:["Token que dá direito a voto","Token usado só em pagamentos","Token emitido pelo desenvolvedor","Token bloqueado dos fundadores"],correctAnswer:0,category:"DeFi",difficulty:"easy"},
+  {id:81,question:"O que define um AMM em uma frase?",options:["Cotador automático baseado em fórmula","Robô de trading entre exchanges","Software de market making manual","Servidor que casa ordens off-chain"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:82,question:"Qual a fórmula clássica usada pela Uniswap V2?",options:["x · y = k (produto constante)","x + y = k (soma constante)","x ÷ y = k (razão constante)","x² + y² = k (norma constante)"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:83,question:"O que é impermanent loss em provisão de liquidez?",options:["Perda relativa a só manter os ativos","Perda permanente por hack do contrato","Perda fiscal ao retirar liquidez","Perda paga em taxas por TX"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:84,question:"O que define a Curve Finance entre as DEXs?",options:["Foco em pares de ativos correlatos","Foco em NFTs raros tokenizados","Foco em derivativos perpétuos","Foco em swaps cross-chain"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:85,question:"O que é o protocolo Aave em uma frase?",options:["Mercado on-chain de empréstimos","Carteira oficial da Ethereum","Sistema de auditoria de contratos","Marketplace de NFTs grandes"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:86,question:"Qual stablecoin é emitida pela MakerDAO?",options:["DAI","USDC","BUSD","FRAX"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:87,question:"O que é um flash loan em uma frase?",options:["Empréstimo pago na mesma transação","Empréstimo com taxa zero garantida","Empréstimo sem qualquer colateral","Empréstimo concedido em parcelas"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:88,question:"O que define a sobrecolateralização em DeFi?",options:["Garantia maior que o valor pego","Garantia menor que o empréstimo","Garantia paga em parcelas iguais","Garantia em dois ativos diferentes"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:89,question:"O que é a liquidação de uma posição em DeFi?",options:["Venda forçada do colateral abaixo do limite","Encerramento voluntário pelo usuário","Pagamento antecipado da dívida","Transferência da dívida a terceiro"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:90,question:"O que TVL representa em um protocolo DeFi?",options:["Valor total bloqueado em contratos","Volume total negociado no mês","Valor total em pagamentos pendentes","Volume total liberado em saques"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:91,question:"O que significa slippage em uma swap em DEX?",options:["Diferença entre preço esperado e executado","Atraso entre clique e confirmação","Taxa cobrada pelo provedor de RPC","Variação cambial entre dois pares"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:92,question:"Para que serve o WBTC no ecossistema Ethereum?",options:["Trazer liquidez de BTC para DeFi","Substituir o BTC nas exchanges","Criar versão mais rápida do Bitcoin","Servir como token de governança"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:93,question:"O que é uma stablecoin algorítmica?",options:["Mantém paridade via mecânica de oferta","Lastreada em ouro físico em cofre","Lastreada em moeda fiduciária 1:1","Garantida pelo Tesouro dos EUA"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:94,question:"O que é liquid staking representado em DeFi?",options:["Receber token líquido pelo stake feito","Travar tokens sem receber retorno","Retirar liquidez já em stake","Transferir stake para outro nó"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:95,question:"O que é o protocolo Lido conhecido por oferecer?",options:["Liquid staking de ETH e outros ativos","Empréstimos com colateral em fiat","Marketplace centralizado de NFTs","Custódia institucional de ativos"],correctAnswer:0,category:"DeFi",difficulty:"medium"},
+  {id:96,question:"O que é um vault dentro do Yearn Finance?",options:["Estratégia automatizada de yield","Cofre de custódia institucional","Carteira oficial dos validadores","Conta em exchange centralizada"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
+  {id:97,question:"O que é PCV (Protocol Controlled Value)?",options:["Liquidez que pertence ao protocolo","Valor pago aos fornecedores externos","Reserva técnica das fundações","Capital travado em fundo do time"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
+  {id:98,question:"O que é o conceito de \"ve-tokenomics\"?",options:["Voto e renda travando token por tempo","Modelo de venda em rodadas privadas","Distribuição mensal igual entre holders","Sistema de impostos sobre transações"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
+  {id:99,question:"O que é uma vault concentrada (Uniswap V3)?",options:["Liquidez em faixa de preço escolhida","Cofre coletivo entre vários LPs","Pool com taxas dinâmicas por trade","Pool com fórmula soma constante"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
+  {id:100,question:"O que define o conceito de \"real yield\"?",options:["Receita real distribuída do protocolo","Rendimento ajustado pela inflação","Rendimento estimado em backtest","Recompensa em tokens recém emitidos"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
+  {id:101,question:"O que é o oráculo de preço de uma DEX usado para?",options:["Calcular preço de execução e liquidação","Atualizar a interface gráfica do app","Listar novos tokens da plataforma","Validar identidade dos usuários"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
+  {id:102,question:"O que é \"sandwich attack\" em uma DEX?",options:["Cerca a TX da vítima entre duas próprias","Ataca contratos com chamadas em loop","Trava o RPC do usuário com spam","Falsifica preço com ordem fake"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
+  {id:103,question:"O que define a stablecoin sUSDe (Ethena)?",options:["Lastro sintético via posições delta-neutras","Lastro 100% em dólar custodiado","Lastro algorítmico sem colateral","Lastro em ouro físico tokenizado"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
+  {id:104,question:"O que é o conceito de \"isolated lending market\"?",options:["Risco isolado por par de ativos","Empréstimo único por usuário","Mercado restrito a stablecoins","Mercado fora da blockchain"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
+  {id:105,question:"O que é \"composability\" em DeFi?",options:["Protocolos se conectando como peças LEGO","Capacidade de criar carteiras múltiplas","Criação de tokens sem auditoria prévia","Composição de portfólio entre exchanges"],correctAnswer:0,category:"DeFi",difficulty:"hard"},
+
+  // NFTS (25)
+  {id:106,question:"O que significa a sigla NFT?",options:["Token não fungível","Token financeiro novo","Token de função técnica","Token nativo de transferência"],correctAnswer:0,category:"NFTs",difficulty:"easy"},
+  {id:107,question:"Qual é o maior marketplace histórico de NFTs?",options:["OpenSea","Rarible","Foundation","SuperRare"],correctAnswer:0,category:"NFTs",difficulty:"easy"},
+  {id:108,question:"O que é \"mintar\" um NFT?",options:["Criar e registrar o NFT on-chain","Comprar um NFT em marketplace","Transferir um NFT entre carteiras","Listar um NFT à venda"],correctAnswer:0,category:"NFTs",difficulty:"easy"},
+  {id:109,question:"Coleção de NFTs muito famosa nos primeiros anos?",options:["CryptoPunks","ApeStarter Pack","DigiAvatars Originals","Ethereum Heroes Set"],correctAnswer:0,category:"NFTs",difficulty:"easy"},
+  {id:110,question:"Coleção de NFTs com macacos lançada em 2021?",options:["Bored Ape Yacht Club","Punks Apes Squad","Crypto Apes Society","Apes On Chain Club"],correctAnswer:0,category:"NFTs",difficulty:"easy"},
+  {id:111,question:"Em que rede a maioria dos NFTs históricos é emitida?",options:["Ethereum","Bitcoin","Cardano","Cosmos"],correctAnswer:0,category:"NFTs",difficulty:"easy"},
+  {id:112,question:"NFTs podem representar quais tipos de ativo?",options:["Arte, ingressos, itens de jogo, identidade","Apenas obras de arte digital genéricas","Apenas perfis em redes sociais","Apenas ingressos de shows musicais"],correctAnswer:0,category:"NFTs",difficulty:"easy"},
+  {id:113,question:"O que diferencia NFT de criptomoeda comum?",options:["Cada NFT é único e não intercambiável","NFT vale sempre mais que cripto","NFT só existe em camadas L2","NFT é centralizado por padrão"],correctAnswer:0,category:"NFTs",difficulty:"easy"},
+  {id:114,question:"Qual padrão Ethereum é mais usado para NFTs únicos?",options:["ERC-721","ERC-20","ERC-777","ERC-4626"],correctAnswer:0,category:"NFTs",difficulty:"medium"},
+  {id:115,question:"O que define o padrão ERC-1155?",options:["Multi-token (fungível e não fungível)","Token só com funções de governança","Token apenas para arte digital","Token específico para stablecoins"],correctAnswer:0,category:"NFTs",difficulty:"medium"},
+  {id:116,question:"O que é royalty em vendas secundárias de NFT?",options:["Comissão paga ao criador original","Taxa cobrada pela rede em cada TX","Imposto retido pela marketplace","Pagamento extra ao comprador novo"],correctAnswer:0,category:"NFTs",difficulty:"medium"},
+  {id:117,question:"Quantos CryptoPunks únicos foram emitidos?",options:["10.000 unidades","5.000 unidades","20.000 unidades","50.000 unidades"],correctAnswer:0,category:"NFTs",difficulty:"medium"},
+  {id:118,question:"O que é um NFT \"utility\" em vez de só arte?",options:["NFT com função extra (acesso, jogo, voto)","NFT com preço maior que a média","NFT lançado por marca conhecida","NFT verificado pela marketplace"],correctAnswer:0,category:"NFTs",difficulty:"medium"},
+  {id:119,question:"O que é uma whitelist em mints de NFT?",options:["Lista pré-aprovada para mintar antes","Lista de NFTs já vendidos","Lista de marketplaces oficiais","Lista de carteiras banidas"],correctAnswer:0,category:"NFTs",difficulty:"medium"},
+  {id:120,question:"Para que serve o IPFS no contexto de NFTs?",options:["Hospedar metadados e imagens","Custodiar a chave privada do dono","Validar a autenticidade do criador","Substituir a blockchain principal"],correctAnswer:0,category:"NFTs",difficulty:"medium"},
+  {id:121,question:"O que é uma rede comum para NFTs com taxa baixa?",options:["Polygon","Bitcoin","Litecoin","Dogecoin"],correctAnswer:0,category:"NFTs",difficulty:"medium"},
+  {id:122,question:"O que é um NFT generativo?",options:["Criado a partir de regras algorítmicas","Criado por inteligência artificial pura","Criado com várias edições idênticas","Criado por votação da comunidade"],correctAnswer:0,category:"NFTs",difficulty:"medium"},
+  {id:123,question:"O que é \"floor price\" de uma coleção?",options:["Menor preço listado no momento","Preço médio de venda no mês","Preço inicial do mint original","Preço máximo já registrado"],correctAnswer:0,category:"NFTs",difficulty:"medium"},
+  {id:124,question:"O que é um NFT fracionado (F-NFT)?",options:["NFT dividido em tokens fungíveis","NFT vendido em partes físicas","NFT compartilhado entre carteiras","NFT com várias edições idênticas"],correctAnswer:0,category:"NFTs",difficulty:"hard"},
+  {id:125,question:"O que é um \"soulbound token\" (SBT)?",options:["Token não transferível atrelado ao dono","Token com vencimento programado","Token de uso único em jogos","Token bloqueado por contrato KYC"],correctAnswer:0,category:"NFTs",difficulty:"hard"},
+  {id:126,question:"O que define um NFT \"dinâmico\"?",options:["Atributos podem mudar com eventos","Preço varia automaticamente","Imagem é gerada por IA on-chain","Só existe em uma carteira específica"],correctAnswer:0,category:"NFTs",difficulty:"hard"},
+  {id:127,question:"O que é \"on-chain art\" em NFTs?",options:["Arte armazenada inteira na blockchain","Arte registrada por hash externo","Arte emitida só em layer 2","Arte vinculada a redes sociais"],correctAnswer:0,category:"NFTs",difficulty:"hard"},
+  {id:128,question:"O que são Bitcoin Ordinals em uma frase?",options:["Inscrições em satoshis individuais","Versão Bitcoin do padrão ERC-721","Sidechain dedicada a NFTs","Mercado paralelo dentro do Bitcoin"],correctAnswer:0,category:"NFTs",difficulty:"hard"},
+  {id:129,question:"O que define um NFT \"semi-fungível\"?",options:["Padrão único em emissão e fungível depois","Token único trocável só por dinheiro","Token único só em redes de teste","Token cuja arte muda por horário"],correctAnswer:0,category:"NFTs",difficulty:"hard"},
+  {id:130,question:"O que é uma \"gas war\" em mints de NFT populares?",options:["Disputa por bloco com gas mais alto","Atrasos por congestionamento natural","Briga jurídica entre criadores rivais","Promoção com taxa zero por bloco"],correctAnswer:0,category:"NFTs",difficulty:"hard"},
+
+  // BLOCKCHAIN (30)
+  {id:131,question:"O que é uma blockchain em uma frase?",options:["Registro distribuído ligado por blocos","Banco de dados de exchanges centrais","Servidor único de transações cripto","Rede privada de mineradores"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},
+  {id:132,question:"O que está dentro de um bloco em uma blockchain?",options:["Transações agrupadas e cabeçalho","Apenas o saldo atual dos endereços","Apenas o histórico das exchanges","Apenas dados das carteiras frias"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},
+  {id:133,question:"O que é descentralização em uma blockchain?",options:["Sem controle por uma única entidade","Existência de muitas exchanges grandes","Existência de muitos usuários ativos","Existência de várias versões da rede"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},
+  {id:134,question:"O que é um nó (node) em uma rede blockchain?",options:["Computador que mantém cópia do ledger","Equipamento exclusivo para mineração","Servidor oficial das fundações","Carteira física conectada à rede"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},
+  {id:135,question:"O que define a imutabilidade de uma blockchain?",options:["Dados confirmados não são alterados","Rede nunca recebe novas atualizações","Endereços nunca trocam de dono","Carteiras nunca podem ser apagadas"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},
+  {id:136,question:"O que é a transparência típica de blockchains públicas?",options:["Qualquer um pode auditar as TXs","Apenas auditores autorizados veem","Apenas exchanges acessam o histórico","Apenas mineradores leem os blocos"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},
+  {id:137,question:"Qual é a primeira blockchain pública lançada?",options:["Bitcoin","Ethereum","Litecoin","Cardano"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},
+  {id:138,question:"O que é um fork em uma rede blockchain?",options:["Divisão do consenso em duas regras","Pagamento extra entre validadores","Tipo de bloco com mais transações","Atualização forçada das carteiras"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},
+  {id:139,question:"O que é uma blockchain pública?",options:["Qualquer um pode participar e ver","Só usuários verificados participam","Só validadores aprovados acessam","Só governos têm acesso completo"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},
+  {id:140,question:"O que é uma blockchain permissionada?",options:["Apenas participantes autorizados validam","Qualquer um pode validar livremente","Validação ocorre fora da rede","Validação só ocorre em horários fixos"],correctAnswer:0,category:"Blockchain",difficulty:"easy"},
+  {id:141,question:"O que é uma função hash criptográfica?",options:["Função one-way que gera saída fixa","Função que criptografa qualquer dado","Função reversível usada em senhas","Função usada apenas em assinaturas"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:142,question:"O que é Proof of Work (PoW) em uma frase?",options:["Consenso baseado em poder computacional","Consenso baseado em tokens travados","Consenso por delegação de votos","Consenso definido por autoridade"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:143,question:"O que é Proof of Stake (PoS) em uma frase?",options:["Consenso baseado em tokens travados","Consenso baseado em poder de hash","Consenso definido por mineradores","Consenso por reputação fora da rede"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:144,question:"O que é \"finality\" em uma blockchain?",options:["Garantia de irreversibilidade da TX","Limite máximo de TXs por bloco","Tempo médio entre blocos minerados","Quantidade de nós necessária"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:145,question:"O que é o \"Merkle tree\" em um bloco?",options:["Estrutura que resume todas as TXs","Lista linear ordenada das TXs","Mapa de saldos de cada conta","Lista de validadores ativos no bloco"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:146,question:"O que é uma rede permissioned vs permissionless?",options:["Acesso restrito vs acesso aberto","Velocidade alta vs velocidade baixa","Custo zero vs custo por TX","On-chain vs off-chain por padrão"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:147,question:"O que diferencia hard fork de soft fork?",options:["Compatibilidade — hard quebra, soft mantém","Hard é maior, soft é menor","Hard é oficial, soft é experimental","Hard é pago, soft é gratuito"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:148,question:"O que é um oracle em uma blockchain?",options:["Fonte de dados externos para contratos","Tipo especial de nó validador","Carteira oficial das fundações","Marketplace integrado à rede"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:149,question:"O que é uma assinatura digital em blockchain?",options:["Prova criptográfica de autoria","Senha utilizada para login","Hash do bloco mais recente","ID da carteira em alguma exchange"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:150,question:"O que é um endereço em uma blockchain?",options:["Identificador derivado de chave pública","Login criado por exchange central","Cadastro nacional emitido por país","Token entregue ao baixar carteira"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:151,question:"O que é throughput de uma blockchain?",options:["Capacidade de TXs por segundo","Taxa média paga por bloco","Número de nós conectados","Capacidade de armazenamento total"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:152,question:"O que é o trilema de escalabilidade?",options:["Equilíbrio entre escala, segurança e descentralização","Conflito entre validador, taxa e bloco","Disputa entre PoW, PoS e PoA","Tensão entre L1, L2 e L3"],correctAnswer:0,category:"Blockchain",difficulty:"medium"},
+  {id:153,question:"O que é Byzantine Fault Tolerance (BFT)?",options:["Tolerância a nós mal-intencionados","Tolerância a falhas elétricas locais","Tolerância a falhas físicas dos nós","Tolerância a apenas duas falhas seguidas"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},
+  {id:154,question:"O que é sharding em blockchain?",options:["Particionamento da rede para escalar","Junção de várias L1 em uma só","Replicação total entre todos os nós","Centralização da execução em poucos nós"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},
+  {id:155,question:"O que é uma sidechain em uma frase?",options:["Cadeia paralela conectada por ponte","Cadeia lateral só para testes","Cópia idêntica da cadeia principal","Camada acima da L1 oficial"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},
+  {id:156,question:"O que é um \"state channel\" em escalabilidade?",options:["Canal off-chain que liquida na L1","Canal entre validadores escolhidos","Canal direto entre dois mineradores","Canal exclusivo entre exchanges"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},
+  {id:157,question:"O que é um zero-knowledge proof?",options:["Prova sem revelar dados sensíveis","Prova de que algo foi assinado","Prova de identidade fora da rede","Prova de saldo entre carteiras"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},
+  {id:158,question:"O que é um VRF (Verifiable Random Function)?",options:["Função aleatória verificável on-chain","Função para validar carteiras frias","Função usada para gerar endereços","Função para encriptar mensagens"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},
+  {id:159,question:"O que é um light client (cliente leve)?",options:["Cliente que valida sem baixar tudo","Cliente que só envia TXs simples","Cliente que minera com pouco hardware","Cliente exclusivo para celulares"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},
+  {id:160,question:"O que é um cross-chain bridge em uma frase?",options:["Ponte entre redes blockchain distintas","Conexão entre exchanges centrais","Atalho dentro da mesma blockchain","Migração definitiva entre redes"],correctAnswer:0,category:"Blockchain",difficulty:"hard"},
+
+  // ALTCOINS (25)
+  {id:161,question:"O que define o termo \"altcoin\"?",options:["Qualquer cripto que não seja Bitcoin","Cripto com baixa capitalização","Cripto sem propósito definido","Cripto lançada antes de 2015"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},
+  {id:162,question:"Qual é o ticker do Litecoin?",options:["LTC","LIT","LTE","LTN"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},
+  {id:163,question:"Qual é o ticker do XRP da Ripple?",options:["XRP","RPL","RIP","XPL"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},
+  {id:164,question:"Qual é o ticker do Cardano?",options:["ADA","CAR","CDA","ADO"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},
+  {id:165,question:"Qual é o ticker do Polkadot?",options:["DOT","POL","PLK","PDK"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},
+  {id:166,question:"Qual é o ticker do Avalanche?",options:["AVAX","AVA","AVL","AVC"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},
+  {id:167,question:"Qual é o ticker do Chainlink?",options:["LINK","CHL","CLK","LNK"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},
+  {id:168,question:"Qual é o ticker do Tron?",options:["TRX","TRN","TRC","TRO"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},
+  {id:169,question:"Qual altcoin começou como uma piada/meme em 2013?",options:["Dogecoin","Litecoin","Solana","Cardano"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},
+  {id:170,question:"Qual altcoin foca explicitamente em privacidade?",options:["Monero","Solana","Cardano","Polkadot"],correctAnswer:0,category:"Altcoins",difficulty:"easy"},
+  {id:171,question:"Quem é o cofundador associado ao Cardano?",options:["Charles Hoskinson","Vitalik Buterin","Gavin Wood","Anatoly Yakovenko"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},
+  {id:172,question:"Quem é o cofundador associado ao Polkadot?",options:["Gavin Wood","Vitalik Buterin","Charles Hoskinson","Anatoly Yakovenko"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},
+  {id:173,question:"Quem é o fundador associado à Solana?",options:["Anatoly Yakovenko","Charles Hoskinson","Vitalik Buterin","Gavin Wood"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},
+  {id:174,question:"Qual blockchain ficou conhecida por alta velocidade e baixo custo?",options:["Solana","Bitcoin","Cardano","Litecoin"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},
+  {id:175,question:"O que define a Binance Smart Chain (BNB Chain)?",options:["Compatível com EVM e mantida por validadores","Cadeia exclusiva para NFTs raros","Cadeia oficial substituta do Bitcoin","Cadeia restrita a usuários verificados"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},
+  {id:176,question:"O que define a função do Chainlink (LINK)?",options:["Rede de oráculos descentralizados","Rede social para criadores cripto","Rede de mensagens entre carteiras","Rede de identidade soberana"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},
+  {id:177,question:"Qual rede é ligada a IoT no marketing histórico?",options:["IOTA","Cardano","Solana","Polygon"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},
+  {id:178,question:"O que define o ecossistema Cosmos?",options:["Rede de blockchains conectadas via IBC","Rede oficial de testes do Ethereum","Rede de NFTs cross-chain","Rede de oráculos pagos por TX"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},
+  {id:179,question:"O que define a Polygon (anteriormente Matic)?",options:["Conjunto de soluções de escala para Ethereum","Cadeia totalmente substituta do Ethereum","Cadeia centralizada de uma exchange","Rede dedicada apenas a stablecoins"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},
+  {id:180,question:"O que distingue o Bitcoin Cash do Bitcoin?",options:["Foco em blocos maiores e taxas baixas","Foco em smart contracts complexos","Foco em privacidade e anonimato","Foco em consenso Proof of Stake"],correctAnswer:0,category:"Altcoins",difficulty:"medium"},
+  {id:181,question:"Qual consenso é associado ao Cardano?",options:["Ouroboros, da família Proof of Stake","Proof of Work clássico estilo BTC","Delegated Proof of Stake puro","Proof of Authority por nós fixos"],correctAnswer:0,category:"Altcoins",difficulty:"hard"},
+  {id:182,question:"Qual técnica torna Solana especialmente rápida?",options:["Proof of History combinado com PoS","Sharding total entre validadores","Mineração com ASIC dedicado","Consenso por delegação completa"],correctAnswer:0,category:"Altcoins",difficulty:"hard"},
+  {id:183,question:"O que é o protocolo IBC do ecossistema Cosmos?",options:["Comunicação entre blockchains soberanas","Rede de pagamentos entre exchanges","Padrão de NFTs entre redes EVM","Sistema de identidade descentralizada"],correctAnswer:0,category:"Altcoins",difficulty:"hard"},
+  {id:184,question:"Qual rede usa parachains conectadas a uma relay chain?",options:["Polkadot","Solana","Cosmos","Avalanche"],correctAnswer:0,category:"Altcoins",difficulty:"hard"},
+  {id:185,question:"O que define a arquitetura subnet da Avalanche?",options:["Sub-redes customizadas com regras próprias","Rede paralela só para mineração","Sub-rede oficial restrita a validadores","Sub-rede dedicada a stablecoins"],correctAnswer:0,category:"Altcoins",difficulty:"hard"},
+
+  // MINING (12)
+  {id:186,question:"O que é mineração de criptomoedas em uma frase?",options:["Validar blocos disputando recompensa","Comprar criptomoedas em parcelas","Negociar criptomoedas em corretora","Armazenar criptomoedas em frio"],correctAnswer:0,category:"Mining",difficulty:"easy"},
+  {id:187,question:"O que é uma pool de mineração?",options:["Grupo que combina hashrate e divide ganhos","Grupo de exchanges que fixam preço","Carteira coletiva entre mineradores","Plataforma para revender hardware"],correctAnswer:0,category:"Mining",difficulty:"easy"},
+  {id:188,question:"O que é hashrate em mineração?",options:["Capacidade computacional dedicada","Velocidade de internet do nó","Tempo médio entre blocos válidos","Saldo de cripto da pool atual"],correctAnswer:0,category:"Mining",difficulty:"easy"},
+  {id:189,question:"Por que Ethereum deixou de usar mineração?",options:["Migrou para Proof of Stake","Encareceu por imposto novo","Passou a ser regulado por lei","Perdeu validadores em massa"],correctAnswer:0,category:"Mining",difficulty:"easy"},
+  {id:190,question:"O que é um ASIC em mineração?",options:["Hardware especializado para um algoritmo","Programa que roda em GPU comum","Sistema operacional para mineradores","Carteira física do minerador"],correctAnswer:0,category:"Mining",difficulty:"medium"},
+  {id:191,question:"O que é dificuldade de mineração?",options:["Parâmetro que controla o tempo do bloco","Custo elétrico médio por hash","Número de mineradores ativos","Quantidade total de pools"],correctAnswer:0,category:"Mining",difficulty:"medium"},
+  {id:192,question:"O que é a recompensa de bloco (block reward)?",options:["Pagamento ao minerador por bloco válido","Bônus mensal pago por exchange","Reembolso de gas por usuário","Comissão paga pela fundação"],correctAnswer:0,category:"Mining",difficulty:"medium"},
+  {id:193,question:"O que ocorre com a recompensa em cada halving?",options:["É reduzida pela metade","É dobrada pelo protocolo","É distribuída pela pool","É travada por 4 anos"],correctAnswer:0,category:"Mining",difficulty:"medium"},
+  {id:194,question:"O que é cloud mining em uma frase?",options:["Alugar capacidade de mineração remota","Minerar usando energia solar local","Minerar dentro de exchange paga","Minerar com hardware compartilhado"],correctAnswer:0,category:"Mining",difficulty:"medium"},
+  {id:195,question:"Qual algoritmo de hash o Bitcoin usa?",options:["SHA-256","Scrypt","Ethash","X11"],correctAnswer:0,category:"Mining",difficulty:"hard"},
+  {id:196,question:"Qual algoritmo de hash o Litecoin originalmente usa?",options:["Scrypt","SHA-256","Ethash","Equihash"],correctAnswer:0,category:"Mining",difficulty:"hard"},
+  {id:197,question:"Quais são as duas fontes de receita do minerador?",options:["Recompensa de bloco mais taxas","Recompensa fixa anual da rede","Apenas as taxas das transações","Apenas a venda do hardware"],correctAnswer:0,category:"Mining",difficulty:"hard"},
+
+  // WALLETS (15)
+  {id:198,question:"O que é uma carteira de criptomoedas?",options:["Software ou hardware que guarda chaves","Aplicativo bancário com cripto","Conta criada em alguma exchange","Token entregue ao usuário novato"],correctAnswer:0,category:"Wallets",difficulty:"easy"},
+  {id:199,question:"O que é uma hot wallet?",options:["Carteira conectada à internet","Carteira com taxa elevada","Carteira de uso institucional","Carteira lenta para confirmar"],correctAnswer:0,category:"Wallets",difficulty:"easy"},
+  {id:200,question:"O que é uma cold wallet?",options:["Carteira que opera offline","Carteira com baixa adoção","Carteira sem suporte oficial","Carteira gratuita por padrão"],correctAnswer:0,category:"Wallets",difficulty:"easy"},
+  {id:201,question:"O que é uma hardware wallet?",options:["Dispositivo físico para guardar chaves","Computador dedicado a mineração","Pendrive comum sem firmware","Smartphone com app de cripto"],correctAnswer:0,category:"Wallets",difficulty:"easy"},
+  {id:202,question:"Marca de hardware wallet bem conhecida?",options:["Ledger","Coinbase","MetaMask","Binance"],correctAnswer:0,category:"Wallets",difficulty:"easy"},
+  {id:203,question:"O que é uma seed phrase em uma frase?",options:["Sequência de palavras que recupera a carteira","Senha simples definida no app","Login fornecido pela exchange","Código PIN do dispositivo físico"],correctAnswer:0,category:"Wallets",difficulty:"medium"},
+  {id:204,question:"Padrão BIP-39 normalmente usa quantas palavras?",options:["12 ou 24 palavras","6 ou 8 palavras","18 ou 36 palavras","4 ou 5 palavras"],correctAnswer:0,category:"Wallets",difficulty:"medium"},
+  {id:205,question:"O que é a MetaMask em uma frase?",options:["Carteira de navegador focada em EVM","Exchange centralizada baseada nos EUA","App oficial da fundação Ethereum","Marketplace integrado de NFTs"],correctAnswer:0,category:"Wallets",difficulty:"medium"},
+  {id:206,question:"O que define uma carteira non-custodial?",options:["Usuário controla as chaves privadas","Custódia fica com a corretora","Chaves ficam com o desenvolvedor","Chaves ficam em servidor central"],correctAnswer:0,category:"Wallets",difficulty:"medium"},
+  {id:207,question:"O que define uma carteira custodial?",options:["Terceiros controlam as chaves privadas","Usuário detém todas as chaves","Chaves ficam em hardware do usuário","Chaves ficam em papel impresso"],correctAnswer:0,category:"Wallets",difficulty:"medium"},
+  {id:208,question:"O que é uma paper wallet?",options:["Chaves impressas em papel físico","Carteira oficial em formato PDF","Documento legal de propriedade","Backup digital de carteira oficial"],correctAnswer:0,category:"Wallets",difficulty:"medium"},
+  {id:209,question:"O que é uma carteira multisig?",options:["Requer várias assinaturas para gastar","Permite múltiplos endereços públicos","Permite múltiplas redes blockchain","Permite múltiplos usuários por login"],correctAnswer:0,category:"Wallets",difficulty:"hard"},
+  {id:210,question:"O que é uma carteira HD (Hierarchical Deterministic)?",options:["Gera muitos endereços a partir de uma seed","Gera endereços só após validar identidade","Gera endereços limitados pelo provedor","Gera endereços fora da blockchain"],correctAnswer:0,category:"Wallets",difficulty:"hard"},
+  {id:211,question:"O que é a passphrase opcional do BIP-39?",options:["Palavra extra que cria carteira separada","Recuperação alternativa caso perca a seed","Senha exigida sempre que abrir o app","Backup digital armazenado pela marca"],correctAnswer:0,category:"Wallets",difficulty:"hard"},
+  {id:212,question:"O que é um \"smart wallet\" (account abstraction)?",options:["Carteira que é um smart contract","Carteira gerenciada por inteligência artificial","Carteira protegida por hardware bancário","Carteira oficial das exchanges grandes"],correctAnswer:0,category:"Wallets",difficulty:"hard"},
+
+  // EXCHANGES (14)
+  {id:213,question:"O que é uma exchange de criptomoedas?",options:["Plataforma para comprar e vender cripto","Software de carteira para celulares","Provedor oficial de blockchain","Marketplace exclusivo para NFTs"],correctAnswer:0,category:"Exchanges",difficulty:"easy"},
+  {id:214,question:"Qual é a maior exchange do mundo por volume?",options:["Binance","Coinbase","Kraken","Bitstamp"],correctAnswer:0,category:"Exchanges",difficulty:"easy"},
+  {id:215,question:"Exchange listada na bolsa americana?",options:["Coinbase (Nasdaq)","Binance (Nasdaq)","Kraken (NYSE)","Bitfinex (NYSE)"],correctAnswer:0,category:"Exchanges",difficulty:"easy"},
+  {id:216,question:"O que é uma DEX em uma frase?",options:["Exchange descentralizada que opera on-chain","Exchange digital com sede internacional","Exchange brasileira focada em pequenos","Exchange dedicada apenas a NFTs"],correctAnswer:0,category:"Exchanges",difficulty:"easy"},
+  {id:217,question:"O que é trading fee?",options:["Taxa cobrada por cada operação","Preço atual cobrado pelo ativo","Lucro líquido obtido pelo trader","Imposto retido pelo governo"],correctAnswer:0,category:"Exchanges",difficulty:"easy"},
+  {id:218,question:"O que é KYC nas exchanges centralizadas?",options:["Verificação de identidade do usuário","Verificação de saldo do usuário","Verificação de hardware do usuário","Verificação de localização do usuário"],correctAnswer:0,category:"Exchanges",difficulty:"medium"},
+  {id:219,question:"O que define uma CEX?",options:["Exchange centralizada operada por empresa","Exchange compartilhada entre várias redes","Exchange oficial regulada por governo","Exchange exclusiva para grandes contas"],correctAnswer:0,category:"Exchanges",difficulty:"medium"},
+  {id:220,question:"O que é o orderbook de uma exchange?",options:["Lista de ordens de compra e venda","Histórico fiscal de cada cliente","Histórico de saques e depósitos","Lista de tokens já listados"],correctAnswer:0,category:"Exchanges",difficulty:"medium"},
+  {id:221,question:"Risco principal de manter cripto em CEX?",options:["Não controlar suas próprias chaves","Pagar taxas mais altas que DEX","Receber preço pior que o mercado","Esperar mais tempo por ordens"],correctAnswer:0,category:"Exchanges",difficulty:"medium"},
+  {id:222,question:"O que significa \"not your keys, not your coins\"?",options:["Sem chaves, sem soberania sobre cripto","Sem chaves, sem acesso à exchange","Sem chaves, sem fazer staking","Sem chaves, sem usar mainnet"],correctAnswer:0,category:"Exchanges",difficulty:"medium"},
+  {id:223,question:"O que define um market maker em uma exchange?",options:["Provê liquidez postando ordens limitadas","Executa ordens contra a casa apenas","Define o preço final do book de ordens","Faz custódia de fundos da exchange"],correctAnswer:0,category:"Exchanges",difficulty:"medium"},
+  {id:224,question:"O que foi o caso FTX em poucas palavras?",options:["Falência por má gestão e mistura de fundos","Hack externo em conta corporativa","Disputa regulatória com a SEC apenas","Migração para a Solana mal sucedida"],correctAnswer:0,category:"Exchanges",difficulty:"hard"},
+  {id:225,question:"O que é prova de reservas (Proof of Reserves)?",options:["Verificação de que exchange cobre os saldos","Verificação de uptime dos servidores","Verificação de KYC dos usuários","Verificação de listagem de ativos"],correctAnswer:0,category:"Exchanges",difficulty:"hard"},
+  {id:226,question:"O que define um perpetual swap?",options:["Derivativo sem data de vencimento","Derivativo de vencimento mensal","Derivativo só negociado em DEX","Derivativo lastreado em ativo físico"],correctAnswer:0,category:"Exchanges",difficulty:"hard"},
+
+  // WEB3 (12)
+  {id:227,question:"O que é Web3 em uma frase?",options:["Internet com propriedade via blockchain","Próxima versão visual da internet","Internet exclusiva para criptomoedas","Internet sem servidores centralizados"],correctAnswer:0,category:"Web3",difficulty:"easy"},
+  {id:228,question:"O que é metaverso no contexto cripto?",options:["Mundo virtual integrado a ativos digitais","Versão 3D de uma rede social central","Jogo eletrônico exclusivo de NFTs","Aplicativo bancário em realidade virtual"],correctAnswer:0,category:"Web3",difficulty:"easy"},
+  {id:229,question:"O que é uma dApp em uma frase?",options:["Aplicativo descentralizado em blockchain","Aplicativo distribuído entre exchanges","Aplicativo digital com login único","Aplicativo dedicado às fundações"],correctAnswer:0,category:"Web3",difficulty:"easy"},
+  {id:230,question:"O que é uma carteira Web3 em uma frase?",options:["Carteira que conecta a contratos on-chain","Carteira oficial das corretoras grandes","Carteira de pagamento entre redes sociais","Carteira gerenciada por bancos digitais"],correctAnswer:0,category:"Web3",difficulty:"easy"},
+  {id:231,question:"O que diferencia Web3 de Web2 em essência?",options:["Propriedade dos dados pelo usuário","Velocidade muito mais alta","Quantidade maior de usuários","Custos zero para o usuário"],correctAnswer:0,category:"Web3",difficulty:"medium"},
+  {id:232,question:"Plataforma de metaverso bem conhecida em cripto?",options:["Decentraland","Facebook (Horizon)","Instagram (Reels VR)","Telegram (3D Chat)"],correctAnswer:0,category:"Web3",difficulty:"medium"},
+  {id:233,question:"O que é \"token gating\" em uma comunidade Web3?",options:["Acesso liberado para holders de token","Bloqueio total a usuários novos","Pagamento mensal em token nativo","Verificação de KYC com token"],correctAnswer:0,category:"Web3",difficulty:"medium"},
+  {id:234,question:"O que define um \"social token\"?",options:["Token vinculado a comunidade ou criador","Token oficial das redes sociais","Token de um banco digital","Token usado só em mensageiros"],correctAnswer:0,category:"Web3",difficulty:"medium"},
+  {id:235,question:"O que é interoperabilidade na Web3?",options:["Diferentes blockchains se comunicarem","Várias carteiras em um mesmo app","Várias contas em uma exchange","Vários idiomas em uma só dApp"],correctAnswer:0,category:"Web3",difficulty:"medium"},
+  {id:236,question:"O que é a Lens Protocol em uma frase?",options:["Rede social descentralizada baseada em NFTs","Rede social tradicional com login Web3","Marketplace oficial de NFTs sociais","Plataforma de identidade governamental"],correctAnswer:0,category:"Web3",difficulty:"hard"},
+  {id:237,question:"O que é Farcaster no contexto Web3?",options:["Protocolo descentralizado para redes sociais","Protocolo de mensagens entre carteiras","Protocolo oficial de NFTs sociais","Protocolo de identidade governamental"],correctAnswer:0,category:"Web3",difficulty:"hard"},
+  {id:238,question:"O que é ENS (Ethereum Name Service)?",options:["Nomes legíveis para endereços ETH","Sistema de identidade governamental","Sistema oficial de KYC para Ethereum","Sistema de notificações entre carteiras"],correctAnswer:0,category:"Web3",difficulty:"hard"},
+
+  // SMART CONTRACTS (12)
+  {id:239,question:"O que é um smart contract em uma frase?",options:["Código auto-executável on-chain","Documento legal escaneado e assinado","Acordo digital entre duas exchanges","Contrato emitido por escritório oficial"],correctAnswer:0,category:"Smart Contracts",difficulty:"easy"},
+  {id:240,question:"Qual linguagem é mais comum para contratos no Ethereum?",options:["Solidity","Python","JavaScript","Go"],correctAnswer:0,category:"Smart Contracts",difficulty:"easy"},
+  {id:241,question:"Smart contracts podem ser modificados após o deploy?",options:["Não — são imutáveis por padrão","Sim — pelo dono a qualquer momento","Sim — pela exchange listante","Sim — pela rede via votação"],correctAnswer:0,category:"Smart Contracts",difficulty:"easy"},
+  {id:242,question:"O que é gas em smart contracts?",options:["Custo computacional pago em token nativo","Combustível físico do servidor","Tipo especial de token de governança","Tarifa fixa cobrada pelo desenvolvedor"],correctAnswer:0,category:"Smart Contracts",difficulty:"easy"},
+  {id:243,question:"O que é um bug crítico em um smart contract?",options:["Falha que pode permitir perda de fundos","Lentidão para confirmar transações","Erro visual na interface da dApp","Falta de tradução para outros idiomas"],correctAnswer:0,category:"Smart Contracts",difficulty:"medium"},
+  {id:244,question:"O que é uma auditoria de smart contract?",options:["Revisão de segurança feita por especialistas","Validação automática feita pela rede","Aprovação obrigatória do governo local","Certificação emitida pela exchange"],correctAnswer:0,category:"Smart Contracts",difficulty:"medium"},
+  {id:245,question:"O que é um proxy contract em uma frase?",options:["Contrato que delega lógica a outro","Contrato que copia outro idêntico","Contrato que substitui o validador","Contrato que cria várias carteiras"],correctAnswer:0,category:"Smart Contracts",difficulty:"medium"},
+  {id:246,question:"O que é um event em um smart contract?",options:["Log emitido para apps lerem off-chain","Pop-up exibido para o usuário","Atualização forçada do contrato","Erro registrado na blockchain"],correctAnswer:0,category:"Smart Contracts",difficulty:"medium"},
+  {id:247,question:"O que define um contrato \"upgradeable\"?",options:["Pode ter sua lógica trocada via proxy","Pode mudar de blockchain sozinho","Pode reverter qualquer transação","Pode emitir tokens sem limite"],correctAnswer:0,category:"Smart Contracts",difficulty:"medium"},
+  {id:248,question:"O que é um ataque de reentrancy em uma frase?",options:["Reentrar em função antes do estado mudar","Reenviar o mesmo bloco várias vezes","Reentrar na rede após perder a conexão","Reaplicar o mesmo voto em uma DAO"],correctAnswer:0,category:"Smart Contracts",difficulty:"hard"},
+  {id:249,question:"O que foi o hack da The DAO em 2016?",options:["Reentrancy que roubou milhões em ETH","Phishing massivo de carteiras simples","Ataque DDoS aos validadores principais","Erro de tipagem em token oficial"],correctAnswer:0,category:"Smart Contracts",difficulty:"hard"},
+  {id:250,question:"O que é \"formal verification\" em smart contracts?",options:["Prova matemática do comportamento do código","Auditoria visual feita por humanos","Aprovação burocrática pelo governo","Verificação por uma rede de pares"],correctAnswer:0,category:"Smart Contracts",difficulty:"hard"},
+
+  // REGULAÇÃO (12)
+  {id:251,question:"O que é AML aplicado a cripto?",options:["Combate à lavagem de dinheiro","Auditoria mensal de mineradores","Aprovação de listagem de tokens","Acordo entre exchanges grandes"],correctAnswer:0,category:"Regulação",difficulty:"easy"},
+  {id:252,question:"O que é KYC em uma frase?",options:["Procedimento de identificação do cliente","Procedimento de validação de carteira","Procedimento de aprovação de token","Procedimento de auditoria do código"],correctAnswer:0,category:"Regulação",difficulty:"easy"},
+  {id:253,question:"País que adotou Bitcoin como moeda legal em 2021?",options:["El Salvador","República Dominicana","Equador","Costa Rica"],correctAnswer:0,category:"Regulação",difficulty:"easy"},
+  {id:254,question:"No Brasil, criptos precisam ser declaradas no IR?",options:["Sim, dependendo do valor mantido","Não, são totalmente isentas","Sim, apenas se vendidas no ano","Não, basta declarar o saldo final"],correctAnswer:0,category:"Regulação",difficulty:"easy"},
+  {id:255,question:"O que é a SEC nos Estados Unidos?",options:["Reguladora dos mercados de capitais americanos","Reguladora apenas das exchanges cripto","Banco central dos Estados Unidos","Departamento de impostos federais"],correctAnswer:0,category:"Regulação",difficulty:"medium"},
+  {id:256,question:"No Brasil, qual órgão regula exchanges de cripto?",options:["Banco Central do Brasil","Receita Federal do Brasil","Comissão de Valores Mobiliários","Ministério da Fazenda apenas"],correctAnswer:0,category:"Regulação",difficulty:"medium"},
+  {id:257,question:"O que é um security token na visão regulatória?",options:["Token classificado como valor mobiliário","Token mais seguro que outros tokens","Token protegido por contrato auditado","Token apenas para investidores qualificados"],correctAnswer:0,category:"Regulação",difficulty:"medium"},
+  {id:258,question:"O que é um utility token na visão regulatória?",options:["Token usado para acesso ou função","Token classificado como ação digital","Token equivalente a uma stablecoin","Token emitido apenas por bancos"],correctAnswer:0,category:"Regulação",difficulty:"medium"},
+  {id:259,question:"O que é a regulação MiCA na Europa?",options:["Marco regulatório de cripto da União Europeia","Imposto único sobre cripto na Europa","Banimento parcial de cripto na Europa","Sistema de identidade digital da Europa"],correctAnswer:0,category:"Regulação",difficulty:"medium"},
+  {id:260,question:"O que é o Howey Test usado pela SEC?",options:["Teste para definir o que é security","Teste para validar segurança de contrato","Teste para autorizar nova exchange","Teste para classificar uma stablecoin"],correctAnswer:0,category:"Regulação",difficulty:"hard"},
+  {id:261,question:"O que é a Travel Rule do FATF?",options:["Compartilhar dados de remetente e destinatário","Limitar volume de TXs internacionais","Bloquear envios para países sancionados","Cobrar taxa adicional em cross-border"],correctAnswer:0,category:"Regulação",difficulty:"hard"},
+  {id:262,question:"O que é uma CBDC?",options:["Moeda digital emitida por banco central","Moeda digital lastreada em cripto","Moeda digital de exchange centralizada","Moeda digital privada lastreada em ouro"],correctAnswer:0,category:"Regulação",difficulty:"hard"},
+
+  // MERCADO (18)
+  {id:263,question:"O que é market cap (capitalização de mercado)?",options:["Preço multiplicado pelo supply circulante","Volume total negociado nas últimas 24h","Liquidez total disponível em DEXs","Lucro acumulado pelo token desde IPO"],correctAnswer:0,category:"Mercado",difficulty:"easy"},
+  {id:264,question:"O que é ATH em jargão de mercado cripto?",options:["Maior preço já atingido pelo ativo","Média anual histórica do ativo","Volume agregado total do ativo","Tendência atual de mercado"],correctAnswer:0,category:"Mercado",difficulty:"easy"},
+  {id:265,question:"O que é \"bull market\" em uma frase?",options:["Tendência sustentada de alta de preços","Tendência sustentada de queda de preços","Mercado lateral sem tendência clara","Mercado com volume praticamente zero"],correctAnswer:0,category:"Mercado",difficulty:"easy"},
+  {id:266,question:"O que é \"bear market\" em uma frase?",options:["Tendência sustentada de queda de preços","Tendência sustentada de alta de preços","Mercado lateral sem tendência clara","Mercado de baixíssimo volume diário"],correctAnswer:0,category:"Mercado",difficulty:"easy"},
+  {id:267,question:"O que é \"FOMO\" no contexto de investimentos?",options:["Medo de ficar de fora de uma alta","Medo de operar com alavancagem","Medo de perder a chave da carteira","Medo de comprar em exchange ruim"],correctAnswer:0,category:"Mercado",difficulty:"easy"},
+  {id:268,question:"O que é \"FUD\" em jargão cripto?",options:["Medo, incerteza e dúvida","Falha de uso direto","Frequência ultra dinâmica","Fundo de utilização direta"],correctAnswer:0,category:"Mercado",difficulty:"easy"},
+  {id:269,question:"O que é dominância do Bitcoin em uma frase?",options:["Participação do BTC no market cap total","Participação do BTC no volume das DEXs","Participação dos mineradores no hashrate","Participação dos validadores no consenso"],correctAnswer:0,category:"Mercado",difficulty:"medium"},
+  {id:270,question:"O que é supply circulante de uma cripto?",options:["Quantidade disponível e em circulação","Quantidade emitida desde o lançamento","Quantidade máxima programada","Quantidade travada em smart contracts"],correctAnswer:0,category:"Mercado",difficulty:"medium"},
+  {id:271,question:"O que é supply total de uma cripto?",options:["Já emitido menos o que foi queimado","Disponível e em circulação no mercado","Limite máximo de emissão futura","Quantidade travada por validadores"],correctAnswer:0,category:"Mercado",difficulty:"medium"},
+  {id:272,question:"O que é supply máximo de uma cripto?",options:["Limite máximo de emissão programado","Quantidade emitida desde o início","Total disponível para negociação","Total travado em contratos DeFi"],correctAnswer:0,category:"Mercado",difficulty:"medium"},
+  {id:273,question:"O que é altseason em jargão cripto?",options:["Período de forte alta das altcoins","Período de queda generalizada do Bitcoin","Período de listagem em exchanges grandes","Período de halving programado do BTC"],correctAnswer:0,category:"Mercado",difficulty:"medium"},
+  {id:274,question:"O que é volume diário de negociação?",options:["Soma negociada nas últimas 24 horas","Soma de todas TXs já registradas","Quantidade de tokens minerados no dia","Quantidade de novos endereços criados"],correctAnswer:0,category:"Mercado",difficulty:"medium"},
+  {id:275,question:"O que é uma \"baleia\" no mercado cripto?",options:["Endereço com saldo muito grande","Trader que opera com alavancagem","Validador com muito stake na rede","Pool de mineração mais rentável"],correctAnswer:0,category:"Mercado",difficulty:"medium"},
+  {id:276,question:"O que é o índice Fear & Greed do mercado cripto?",options:["Métrica de sentimento entre medo e ganância","Índice oficial regulatório de cripto","Índice de inflação dos tokens emitidos","Índice de volume das maiores exchanges"],correctAnswer:0,category:"Mercado",difficulty:"hard"},
+  {id:277,question:"O que é Mayer Multiple aplicado ao Bitcoin?",options:["Preço dividido pela média móvel de 200 dias","Preço dividido pelo halving anterior","Preço multiplicado pelo hashrate atual","Preço multiplicado pelo supply em circulação"],correctAnswer:0,category:"Mercado",difficulty:"hard"},
+  {id:278,question:"O que é o NVT Ratio em on-chain?",options:["Capitalização dividida pelo volume on-chain","Volume dividido pelo número de carteiras","Total de TXs dividido pelos blocos","Preço dividido pelo hashrate atual"],correctAnswer:0,category:"Mercado",difficulty:"hard"},
+  {id:279,question:"O que é \"realized cap\" no Bitcoin?",options:["Capitalização baseada no último preço movido","Capitalização baseada no preço atual","Capitalização baseada na média anual","Capitalização baseada no preço de listagem"],correctAnswer:0,category:"Mercado",difficulty:"hard"},
+  {id:280,question:"O que é o modelo Stock-to-Flow (S2F)?",options:["Razão entre estoque existente e nova emissão","Razão entre volume diário e supply","Razão entre validadores e total de nós","Razão entre demanda e oferta circulante"],correctAnswer:0,category:"Mercado",difficulty:"hard"},
+];
+
+// =====================================================
+// HELPERS
+// =====================================================
 let usedQuestionIds = new Set();
-function shuffleOptions(q){const idx=q.options.map((_,i)=>i);for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]];}return{...q,options:idx.map(i=>q.options[i]),correctAnswer:idx.indexOf(q.correctAnswer)};}
-
-/* ===== STATE — added 'lead' screen and leadData ===== */
-let state={screen:'lead',difficulty:'medium',numQuestions:10,questions:[],current:0,selected:null,revealed:false,score:0,answers:[],leadData:{nome:'',telefone:'',email:''}};
-const LETTERS=['A','B','C','D'],DIFF_LABELS={easy:'Iniciante',medium:'Intermediário',hard:'Avançado'},DIFF_ICONS={easy:'🌱',medium:'⚡',hard:'🔥'};
-
-function selectQuestions(){const pool=QUESTION_BANK.filter(q=>q.difficulty===state.difficulty&&!usedQuestionIds.has(q.id));const shuffled=[...pool].sort(()=>Math.random()-0.5);const picked=shuffled.slice(0,Math.min(state.numQuestions,shuffled.length));picked.forEach(q=>usedQuestionIds.add(q.id));return picked.map(shuffleOptions);}
-function getAvailableCount(){return QUESTION_BANK.filter(q=>q.difficulty===state.difficulty&&!usedQuestionIds.has(q.id)).length;}
-function startGame(){state.screen='loading';render();setTimeout(()=>{state.questions=selectQuestions();if(state.questions.length===0){QUESTION_BANK.filter(q=>q.difficulty===state.difficulty).forEach(q=>usedQuestionIds.delete(q.id));state.questions=selectQuestions();}state.current=0;state.selected=null;state.revealed=false;state.score=0;state.answers=[];state.screen='playing';render();},800);}
-function pickAnswer(i){if(state.revealed)return;state.selected=i;render();}
-function checkOrNext(){if(state.selected===null)return;if(!state.revealed){state.revealed=true;const c=state.selected===state.questions[state.current].correctAnswer;state.answers.push({selected:state.selected,correct:c});if(c)state.score++;render();return;}if(state.current+1<state.questions.length){state.current++;state.selected=null;state.revealed=false;render();}else{state.screen='results';render();}}
-function resetGame(){state={...state,screen:'setup',questions:[],current:0,selected:null,revealed:false,score:0,answers:[]};render();}
-
-/* ===== LEAD FORM FUNCTIONS ===== */
-function submitLeadForm() {
-    const nome = document.getElementById('lead-nome').value.trim();
-    const telefone = document.getElementById('lead-telefone').value.trim();
-    const email = document.getElementById('lead-email').value.trim();
-
-    let valid = true;
-
-    // Validate nome
-    if (!nome) {
-        document.getElementById('err-nome').classList.add('visible');
-        document.getElementById('lead-nome').classList.add('error');
-        valid = false;
-    } else {
-        document.getElementById('err-nome').classList.remove('visible');
-        document.getElementById('lead-nome').classList.remove('error');
+function shuffleOptions(q){
+    const idx = q.options.map((_,i)=>i);
+    for(let i=idx.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [idx[i],idx[j]] = [idx[j],idx[i]];
     }
+    return {...q, options:idx.map(i=>q.options[i]), correctAnswer:idx.indexOf(q.correctAnswer)};
+}
+function formatTime(seconds){
+    const m = Math.floor(seconds/60), s = seconds%60;
+    if(m === 0) return s + 's';
+    return m + 'min ' + (s<10 ? '0'+s : s) + 's';
+}
+// Score 0-10: 70% acertos, 30% tempo. Tempo ideal = 15s/pergunta, ruim = 60s+.
+// Salvaguarda: tempo só conta se acertar pelo menos 50%.
+function calculateScore(acertos, total, tempoSegundos){
+    const acertoScore = (acertos/total) * 7;
+    const tempoMedio = tempoSegundos/total;
+    let tempoScore;
+    if(tempoMedio <= 15) tempoScore = 3;
+    else if(tempoMedio >= 60) tempoScore = 0;
+    else tempoScore = 3 * (1 - (tempoMedio-15)/45);
+    if(acertos/total < 0.5) tempoScore = 0;
+    return Math.round((acertoScore+tempoScore)*10)/10;
+}
 
-    // Validate telefone
-    const telClean = telefone.replace(/\D/g, '');
-    if (telClean.length < 10) {
-        document.getElementById('err-telefone').classList.add('visible');
-        document.getElementById('lead-telefone').classList.add('error');
-        valid = false;
-    } else {
-        document.getElementById('err-telefone').classList.remove('visible');
-        document.getElementById('lead-telefone').classList.remove('error');
+// =====================================================
+// STATE
+// =====================================================
+let state = {
+    screen: 'setup',  // setup | loading | playing | form | results
+    difficulty: 'medium',
+    numQuestions: 10,
+    questions: [],
+    current: 0,
+    selected: null,
+    revealed: false,
+    score: 0,
+    answers: [],
+    leadData: { nome:'', telefone:'', email:'' },
+    hasStoredLead: false,
+    elapsedSeconds: 0,
+    startTime: null,
+    timerInterval: null,
+};
+
+const LETTERS = ['A','B','C','D'];
+const DIFF_LABELS = {easy:'Iniciante', medium:'Intermediário', hard:'Avançado'};
+const DIFF_ICONS = {easy:'🌱', medium:'⚡', hard:'🔥'};
+
+// Carrega lead do localStorage no boot
+try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+        const parsed = JSON.parse(raw);
+        if(parsed && parsed.email){
+            state.leadData = {nome:parsed.nome||'', telefone:parsed.telefone||'', email:parsed.email||''};
+            state.hasStoredLead = true;
+        }
     }
+} catch(e) { /* ignore */ }
 
-    // Validate email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        document.getElementById('err-email').classList.add('visible');
-        document.getElementById('lead-email').classList.add('error');
-        valid = false;
-    } else {
-        document.getElementById('err-email').classList.remove('visible');
-        document.getElementById('lead-email').classList.remove('error');
-    }
+// =====================================================
+// QUESTION SELECTION
+// =====================================================
+function selectQuestions(){
+    const pool = QUESTION_BANK.filter(q => q.difficulty === state.difficulty && !usedQuestionIds.has(q.id));
+    const shuffled = [...pool].sort(()=>Math.random()-0.5);
+    const picked = shuffled.slice(0, Math.min(state.numQuestions, shuffled.length));
+    picked.forEach(q => usedQuestionIds.add(q.id));
+    return picked.map(shuffleOptions);
+}
 
-    if (!valid) return;
+// =====================================================
+// GAME FLOW
+// =====================================================
+function startGame(){
+    state.screen = 'loading';
+    render();
+    setTimeout(() => {
+        state.questions = selectQuestions();
+        if(state.questions.length === 0){
+            // Esgotou perguntas pra essa dificuldade — reseta o pool dessa dificuldade
+            QUESTION_BANK.filter(q => q.difficulty === state.difficulty).forEach(q => usedQuestionIds.delete(q.id));
+            state.questions = selectQuestions();
+        }
+        state.current = 0;
+        state.selected = null;
+        state.revealed = false;
+        state.score = 0;
+        state.answers = [];
+        state.elapsedSeconds = 0;
+        state.startTime = Date.now();
+        state.screen = 'playing';
+        // Inicia cronômetro
+        if(state.timerInterval) clearInterval(state.timerInterval);
+        state.timerInterval = setInterval(() => {
+            state.elapsedSeconds = Math.floor((Date.now()-state.startTime)/1000);
+            updateTimer();
+        }, 1000);
+        render();
+    }, 800);
+}
 
-    // Save lead data
-    state.leadData = { nome, telefone, email };
+function updateTimer(){
+    const el = document.getElementById('timer-badge');
+    if(el) el.textContent = '⏱ ' + formatTime(state.elapsedSeconds);
+}
 
-    // Send to Google Forms silently via iframe
-    sendToGoogleForms(nome, telefone, email);
-
-    // Go to setup screen
-    state.screen = 'setup';
+function pickAnswer(i){
+    if(state.revealed) return;
+    state.selected = i;
     render();
 }
 
-function sendToGoogleForms(nome, telefone, email) {
+function checkOrNext(){
+    if(state.selected === null) return;
+    if(!state.revealed){
+        state.revealed = true;
+        const c = state.selected === state.questions[state.current].correctAnswer;
+        state.answers.push({selected:state.selected, correct:c});
+        if(c) state.score++;
+        render();
+        return;
+    }
+    if(state.current+1 < state.questions.length){
+        state.current++;
+        state.selected = null;
+        state.revealed = false;
+        render();
+    } else {
+        // Acabou: para cronômetro
+        if(state.timerInterval) clearInterval(state.timerInterval);
+        // Vai pro form ou direto pro resultado
+        state.screen = state.hasStoredLead ? 'results' : 'form';
+        render();
+    }
+}
+
+function resetGame(){
+    if(state.timerInterval) clearInterval(state.timerInterval);
+    state.screen = 'setup';
+    state.questions = [];
+    state.current = 0;
+    state.selected = null;
+    state.revealed = false;
+    state.score = 0;
+    state.answers = [];
+    state.elapsedSeconds = 0;
+    state.startTime = null;
+    render();
+}
+
+// =====================================================
+// LEAD FORM
+// =====================================================
+function submitLeadForm(){
+    const nome = document.getElementById('lead-nome').value.trim();
+    const telefone = document.getElementById('lead-telefone').value.trim();
+    const email = document.getElementById('lead-email').value.trim();
+    let valid = true;
+
+    if(!nome){
+        document.getElementById('err-nome').classList.add('visible');
+        document.getElementById('lead-nome').classList.add('error');
+        valid = false;
+    }
+    const telClean = telefone.replace(/\D/g,'');
+    if(telClean.length < 10){
+        document.getElementById('err-telefone').classList.add('visible');
+        document.getElementById('lead-telefone').classList.add('error');
+        valid = false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRegex.test(email)){
+        document.getElementById('err-email').classList.add('visible');
+        document.getElementById('lead-email').classList.add('error');
+        valid = false;
+    }
+    if(!valid) return;
+
+    state.leadData = {nome, telefone, email};
+
+    // Envia pro Google Form via iframe oculto (não bloqueia o resultado se falhar)
+    sendToGoogleForms(nome, telefone, email);
+
+    // Salva no localStorage pra não pedir de novo
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            nome, telefone, email,
+            savedAt: new Date().toISOString()
+        }));
+        state.hasStoredLead = true;
+    } catch(e) { /* ignore */ }
+
+    state.screen = 'results';
+    render();
+}
+
+function sendToGoogleForms(nome, telefone, email){
     const params = new URLSearchParams();
     params.append(FORM_ENTRIES.nome, nome);
     params.append(FORM_ENTRIES.telefone, telefone);
     params.append(FORM_ENTRIES.email, email);
+    const url = GOOGLE_FORM_URL + '?' + params.toString();
 
-    const url = GOOGLE_FORM_URL + "?" + params.toString();
-
-    // Create hidden iframe to submit without redirect
     const iframe = document.createElement('iframe');
     iframe.name = 'hidden_iframe_lead';
     iframe.style.display = 'none';
     document.body.appendChild(iframe);
     iframe.src = url;
-
-    // Clean up after 5 seconds
-    setTimeout(() => {
-        if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
-    }, 5000);
+    setTimeout(() => { if(iframe.parentNode) iframe.parentNode.removeChild(iframe); }, 5000);
 }
 
-function formatPhone(input) {
-    let val = input.value.replace(/\D/g, '');
-    if (val.length > 11) val = val.slice(0, 11);
-    if (val.length > 6) {
-        input.value = '(' + val.slice(0, 2) + ') ' + val.slice(2, 7) + '-' + val.slice(7);
-    } else if (val.length > 2) {
-        input.value = '(' + val.slice(0, 2) + ') ' + val.slice(2);
-    } else if (val.length > 0) {
+function formatPhone(input){
+    let val = input.value.replace(/\D/g,'');
+    if(val.length > 11) val = val.slice(0,11);
+    if(val.length > 6){
+        input.value = '(' + val.slice(0,2) + ') ' + val.slice(2,7) + '-' + val.slice(7);
+    } else if(val.length > 2){
+        input.value = '(' + val.slice(0,2) + ') ' + val.slice(2);
+    } else if(val.length > 0){
         input.value = '(' + val;
     } else {
         input.value = '';
     }
 }
 
-/* ===== RENDER LEAD FORM ===== */
-function renderLead() {
+// =====================================================
+// RENDERS
+// =====================================================
+function renderSetup(){
+    const welcomeName = state.leadData.nome ? state.leadData.nome.split(' ')[0] : '';
+    const welcomeBack = state.hasStoredLead && welcomeName
+        ? `<div class="welcome-back">Bem-vindo de volta, <strong>${welcomeName}</strong> 👋</div>`
+        : '';
+    return `<div class="card animate-in">
+        <div class="logo-wrap">
+            <img src="${LOGO_SRC}" class="logo-img" alt="Ascen Cripto">
+            <div class="logo-sub">Teste seus conhecimentos sobre o universo cripto</div>
+        </div>
+        ${welcomeBack}
+        <div class="section-label">Dificuldade</div>
+        <div class="option-row">
+            ${['easy','medium','hard'].map(d => `<button class="opt-btn ${state.difficulty===d?'active':''}" onclick="state.difficulty='${d}';render();">${DIFF_ICONS[d]} ${DIFF_LABELS[d]}</button>`).join('')}
+        </div>
+        <div class="section-label">Perguntas</div>
+        <div class="option-row">
+            ${[5,10,20,30].map(n => `<button class="opt-btn ${state.numQuestions===n?'active':''}" onclick="state.numQuestions=${n};render();">${n}</button>`).join('')}
+        </div>
+        <button class="cta-btn" onclick="startGame()">Iniciar Quiz →</button>
+    </div>`;
+}
+
+function renderLoading(){
+    return `<div class="card"><div class="loading-wrap"><div class="spinner"></div><h2>Preparando seu desafio...</h2><p>Selecionando perguntas inéditas</p></div></div>`;
+}
+
+function renderPlaying(){
+    const q = state.questions[state.current];
+    const pct = ((state.current)/state.questions.length*100).toFixed(0);
+    const catClass = q.category === 'Smart Contracts' ? 'Smart' : q.category;
+    return `<div class="card">
+        <div class="header-row">
+            <div class="badge-group">
+                <span class="score-badge">★ ${state.score}</span>
+                <span class="timer-badge" id="timer-badge">⏱ ${formatTime(state.elapsedSeconds)}</span>
+            </div>
+            <img src="${LOGO_SRC}" style="height:36px;opacity:0.7" alt="">
+        </div>
+        <div class="progress-wrap">
+            <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <span class="progress-text">${state.current+1}/${state.questions.length}</span>
+        </div>
+        <span class="cat-tag ${catClass}">${q.category}</span>
+        <div class="question-text">${q.question}</div>
+        <div class="answer-list">
+            ${q.options.map((opt,i) => {
+                let cls = 'answer-btn', icon = '';
+                if(state.revealed){
+                    cls += ' disabled';
+                    if(i === q.correctAnswer){ cls += ' correct'; icon = '✓'; }
+                    else if(i === state.selected){ cls += ' wrong'; icon = '✗'; }
+                } else if(state.selected === i) cls += ' selected';
+                return `<button class="${cls}" onclick="pickAnswer(${i})"><span class="letter-badge">${LETTERS[i]}</span><span>${opt}</span>${icon ? `<span class="answer-icon">${icon}</span>` : ''}</button>`;
+            }).join('')}
+        </div>
+        <button class="cta-btn ${state.selected===null?'disabled':''}" onclick="checkOrNext()">${!state.revealed ? 'Verificar' : (state.current+1 === state.questions.length ? 'Ver Resultado →' : 'Próxima →')}</button>
+    </div>`;
+}
+
+function renderForm(){
     return `<div class="card animate-in">
         <div class="logo-wrap">
             <img src="${LOGO_SRC}" class="logo-img" alt="Ascen Cripto">
         </div>
         <div class="lead-intro">
-            <h2>Teste seus conhecimentos<br>sobre o universo cripto</h2>
-            <p>Responda o quiz e descubra seu nível de conhecimento sobre Bitcoin, Ethereum, DeFi e muito mais.</p>
+            <h2>Quase lá!</h2>
+            <p>Preencha rapidinho pra desbloquear seu resultado.<br>Você só precisa fazer isso uma vez.</p>
         </div>
-        <div class="lead-features">
-            <span class="lead-feature"><span class="feat-icon">🧠</span> 160+ perguntas</span>
-            <span class="lead-feature"><span class="feat-icon">📊</span> 3 níveis</span>
-            <span class="lead-feature"><span class="feat-icon">🏆</span> Ranking</span>
-        </div>
-        <div class="form-divider"></div>
-        <div class="section-label">Preencha para jogar</div>
         <div class="form-group">
             <label class="form-label" for="lead-nome">Nome</label>
             <input class="form-input" type="text" id="lead-nome" placeholder="Seu nome completo" autocomplete="name">
@@ -249,28 +790,86 @@ function renderLead() {
             <input class="form-input" type="email" id="lead-email" placeholder="seu@email.com" autocomplete="email">
             <div class="form-error" id="err-email">Insira um e-mail válido</div>
         </div>
-        <button class="cta-btn" onclick="submitLeadForm()">Começar o Quiz →</button>
+        <button class="cta-btn" onclick="submitLeadForm()">Ver meu resultado →</button>
         <div class="form-privacy">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            Seus dados estão seguros e não serão compartilhados
+            Seus dados estão seguros. Apenas a Ascen Cripto verá.
         </div>
     </div>`;
 }
 
-function renderSetup(){
-    const welcomeName = state.leadData.nome ? state.leadData.nome.split(' ')[0] : '';
-    const greeting = welcomeName ? `<div style="text-align:center;margin-bottom:20px;font-size:16px;color:var(--text-secondary)">Bem-vindo(a), <span style="color:var(--orange);font-weight:600">${welcomeName}</span>! 🎯</div>` : '';
-    return`<div class="card animate-in">${greeting}<div class="logo-wrap"><img src="${LOGO_SRC}" class="logo-img" alt="Ascen Cripto"><div class="logo-sub">Teste seus conhecimentos sobre o universo cripto</div></div><div class="section-label">Dificuldade</div><div class="option-row">${['easy','medium','hard'].map(d=>`<button class="opt-btn ${state.difficulty===d?'active':''}" onclick="state.difficulty='${d}';render();">${DIFF_ICONS[d]} ${DIFF_LABELS[d]}</button>`).join('')}</div><div class="section-label">Perguntas</div><div class="option-row">${[5,10,15,20].map(n=>`<button class="opt-btn ${state.numQuestions===n?'active':''}" onclick="state.numQuestions=${n};render();">${n}</button>`).join('')}</div><button class="cta-btn" onclick="startGame()">Iniciar Quiz →</button></div>`;
+function renderResults(){
+    const finalScore = calculateScore(state.score, state.questions.length, state.elapsedSeconds);
+    const pct = Math.round((state.score/state.questions.length)*100);
+    const tempoMedio = Math.round(state.elapsedSeconds/state.questions.length);
+
+    let msg, emoji;
+    if(finalScore >= 9){ msg = 'Excepcional. Você domina cripto.'; emoji = '🏆'; }
+    else if(finalScore >= 7){ msg = 'Muito bom. Você manja do assunto.'; emoji = '🎯'; }
+    else if(finalScore >= 5){ msg = 'Razoável. Tem base, dá pra aprofundar.'; emoji = '📈'; }
+    else if(finalScore >= 3){ msg = 'Tá começando. Continue estudando o mercado.'; emoji = '📚'; }
+    else { msg = 'Hora de mergulhar nos fundamentos.'; emoji = '🔍'; }
+
+    return `<div class="card">
+        <div class="logo-wrap">
+            <img src="${LOGO_SRC}" class="logo-img" style="width:80px" alt="">
+        </div>
+        <div class="score-circle-wrap">
+            <div class="score-circle">
+                <div class="score-emoji">${emoji}</div>
+                <div class="score-number">${finalScore.toFixed(1)}</div>
+                <div class="score-of">DE 10</div>
+            </div>
+        </div>
+        <div class="result-msg">${msg}</div>
+        <div class="result-stats">
+            <div class="stat-card">
+                <div class="stat-label">Acertos</div>
+                <div class="stat-value">${state.score}/${state.questions.length}</div>
+                <div class="stat-sub">${pct}%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Tempo total</div>
+                <div class="stat-value gold">${formatTime(state.elapsedSeconds)}</div>
+                <div class="stat-sub">${tempoMedio}s/pergunta</div>
+            </div>
+        </div>
+        <div class="section-label">Revisão</div>
+        <div class="results-list">
+            ${state.questions.map((q,i) => {
+                const a = state.answers[i];
+                const ok = a && a.correct;
+                return `<div class="result-item ${ok?'ok':'fail'}">
+                    <div class="rq">${ok?'✓':'✗'} ${q.question}</div>
+                    ${!ok ? `<div class="ra red">Sua resposta: ${q.options[a.selected]}</div><div class="ra green">Correta: ${q.options[q.correctAnswer]}</div>` : `<div class="ra green">Resposta correta!</div>`}
+                </div>`;
+            }).join('')}
+        </div>
+        <button class="cta-btn" onclick="resetGame()">Jogar Novamente ↺</button>
+    </div>`;
 }
 
-function renderLoading(){return`<div class="card"><div class="loading-wrap"><div class="spinner"></div><h2>Preparando seu desafio...</h2><p>Selecionando perguntas inéditas</p></div></div>`;}
+let prevScreen = null, prevQuestion = -1;
+function render(){
+    const app = document.getElementById('app');
+    let html = '';
+    switch(state.screen){
+        case 'setup': html = renderSetup(); break;
+        case 'loading': html = renderLoading(); break;
+        case 'playing': html = renderPlaying(); break;
+        case 'form': html = renderForm(); break;
+        case 'results': html = renderResults(); break;
+    }
+    app.innerHTML = html;
+    const shouldAnimate = (state.screen !== prevScreen) || (state.screen === 'playing' && state.current !== prevQuestion);
+    if(shouldAnimate){
+        const card = app.querySelector('.card');
+        if(card) card.classList.add('animate-in');
+    }
+    prevScreen = state.screen;
+    prevQuestion = state.current;
+}
 
-function renderPlaying(){const q=state.questions[state.current];const pct=((state.current)/state.questions.length*100).toFixed(0);const catClass=q.category==='Smart Contracts'?'Smart':q.category;return`<div class="card"><div class="header-row"><span class="score-badge">★ ${state.score}</span><img src="${LOGO_SRC}" style="height:36px;opacity:0.7" alt=""></div><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div><span class="progress-text">${state.current+1}/${state.questions.length}</span></div><span class="cat-tag ${catClass}">${q.category}</span><div class="question-text">${q.question}</div><div class="answer-list">${q.options.map((opt,i)=>{let cls='answer-btn',icon='';if(state.revealed){cls+=' disabled';if(i===q.correctAnswer){cls+=' correct';icon='✓';}else if(i===state.selected){cls+=' wrong';icon='✗';}}else if(state.selected===i)cls+=' selected';return`<button class="${cls}" onclick="pickAnswer(${i})"><span class="letter-badge">${LETTERS[i]}</span><span>${opt}</span>${icon?`<span class="answer-icon">${icon}</span>`:''}</button>`;}).join('')}</div><button class="cta-btn ${state.selected===null?'disabled':''}" onclick="checkOrNext()">${!state.revealed?'Verificar':state.current+1===state.questions.length?'Ver Resultados →':'Próxima →'}</button></div>`;}
-
-function renderResults(){const pct=Math.round((state.score/state.questions.length)*100);let msg='📚 Continue estudando o mercado cripto!';if(pct>=80)msg='🏆 Excelente! Você domina cripto!';else if(pct>=60)msg='👍 Muito bem! Bom conhecimento!';else if(pct>=40)msg='👌 Nada mal! Continue aprendendo!';return`<div class="card"><div class="logo-wrap"><img src="${LOGO_SRC}" class="logo-img" style="width:80px" alt=""></div><div class="result-score">${state.score}/${state.questions.length}</div><div class="result-pct">${pct}% de acerto</div><div class="result-msg">${msg}</div><div class="section-label">Revisão</div><div class="results-list">${state.questions.map((q,i)=>{const a=state.answers[i];const ok=a&&a.correct;return`<div class="result-item ${ok?'ok':'fail'}"><div class="rq">${ok?'✓':'✗'} ${q.question}</div>${!ok?`<div class="ra red">Sua resposta: ${q.options[a.selected]}</div><div class="ra green">Correta: ${q.options[q.correctAnswer]}</div>`:`<div class="ra green">Resposta correta!</div>`}</div>`;}).join('')}</div><button class="cta-btn" onclick="resetGame()">Jogar Novamente ↺</button></div>`;}
-
-let prevScreen=null,prevQuestion=-1;
-function render(){const app=document.getElementById('app');let html='';switch(state.screen){case'lead':html=renderLead();break;case'setup':html=renderSetup();break;case'loading':html=renderLoading();break;case'playing':html=renderPlaying();break;case'results':html=renderResults();break;}app.innerHTML=html;const shouldAnimate=(state.screen!==prevScreen)||(state.screen==='playing'&&state.current!==prevQuestion);if(shouldAnimate){const card=app.querySelector('.card');if(card){card.classList.add('animate-in');}}prevScreen=state.screen;prevQuestion=state.current;}
 render();
 </script>
 </body>
