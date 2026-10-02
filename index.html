@@ -149,6 +149,23 @@
         /* WELCOME BACK */
         .welcome-back { text-align: center; margin-bottom: 18px; padding: 12px 18px; background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.2); border-radius: 14px; font-size: 14px; color: var(--gold); }
     </style>
+<!-- Meta Pixel Code (Pixel Ascen Cripto) -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2542425419607619');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2542425419607619&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 <div class="bg-scene"></div>
@@ -679,6 +696,9 @@ function submitLeadForm(){
 
     // Envia pro Google Form via iframe oculto (não bloqueia o resultado se falhar)
     sendToGoogleForms(nome, telefone, email, finalScore, nivel);
+
+    // Pixel da Meta: lead do quiz (nunca quebra o fluxo)
+    try { if (typeof window.fbq === 'function') window.fbq('track', 'Lead', { content_name: 'Quiz Cripto' }); } catch(e) { /* ignore */ }
 
     // Salva no localStorage pra não pedir de novo
     try {
