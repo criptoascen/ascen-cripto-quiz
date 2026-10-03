@@ -149,6 +149,15 @@
         /* WELCOME BACK */
         .welcome-back { text-align: center; margin-bottom: 18px; padding: 12px 18px; background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.2); border-radius: 14px; font-size: 14px; color: var(--gold); }
     </style>
+<!-- Google tag (gtag.js) - Google Analytics Ascen Cripto -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1W97258VD8"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1W97258VD8');
+</script>
+<!-- End Google tag -->
 <!-- Meta Pixel Code (Pixel Ascen Cripto) -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -699,6 +708,9 @@ function submitLeadForm(){
 
     // Pixel da Meta: lead do quiz (nunca quebra o fluxo)
     try { if (typeof window.fbq === 'function') window.fbq('track', 'Lead', { content_name: 'Quiz Cripto' }); } catch(e) { /* ignore */ }
+
+    // Google Analytics: lead do quiz (nunca quebra o fluxo)
+    try { if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_name: 'quiz_cripto' }); } catch(e) { /* ignore */ }
 
     // Salva no localStorage pra não pedir de novo
     try {
